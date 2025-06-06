@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - app1</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/app1.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm position-sticky top-0 w-100" style="background: linear-gradient(90deg, var(--color-secundario) 0%, var(--color-gris) 100%); z-index: 1050; box-shadow: 0 2px 12px rgba(30,60,114,0.08); border-bottom: 2px solid var(--color-acento);">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center fw-bold" asp-area="" asp-controller="Home" asp-action="Index" style="padding:0.2rem 0;">
+                    <img src="/img/logo/logo-viajes.png" alt="Agencia de Viajes" style="max-width:70px; filter: drop-shadow(0 2px 8px #ffd70088);">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door-fill me-1 text-acento"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Viajes" asp-action="Index">
+                                <i class="bi bi-globe-americas me-1 text-acento"></i> Catálogo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Departamento" asp-action="Index">
+                                <i class="bi bi-geo-alt-fill me-1 text-acento"></i> Departamentos
+                            </a>
+                        </li>
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Reserva" asp-action="Index">
+                                    <i class="bi bi-calendar-check-fill me-1 text-acento"></i> Reservas
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Clima" asp-action="Index">
+                                <i class="bi bi-cloud-sun-fill me-1 text-acento"></i> Clima
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Turismo" asp-action="Index">
+                                <i class="bi bi-map-fill me-1 text-acento"></i> Turismo
+                            </a>
+                        </li>
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Contacto" asp-action="Index">
+                                    <i class="bi bi-envelope-fill me-1 text-acento"></i> Contacto
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fw-semibold px-3 rounded-pill" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:var(--color-primario);">
+                                    <i class="bi bi-shield-lock-fill me-1 text-acento"></i> Admin
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Panel Admin</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Compras">Compras</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contacto" asp-action="AdminMensajes">Mensajes</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Contacto" asp-action="AdminComentarios">Comentarios</a></li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+        @await Html.PartialAsync("_Footer")
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - app1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        // Navbar sticky con Bootstrap: aparece al subir, se oculta al bajar
+        let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function() {
+            let st = window.pageYOffset || document.documentElement.scrollTop;
+            if (st < lastScrollTop) {
+                // Scroll hacia arriba: mostrar navbar
+                navbar.classList.add('sticky-top');
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.transition = 'transform 0.3s';
+            } else if (st > lastScrollTop) {
+                // Scroll hacia abajo: ocultar navbar
+                navbar.classList.remove('sticky-top');
+                navbar.style.transform = 'translateY(-100%)';
+                navbar.style.transition = 'transform 0.3s';
+            }
+            lastScrollTop = st <= 0 ? 0 : st;
+        });
+        // Asegura que la navbar esté visible al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            navbar.classList.add('sticky-top');
+            navbar.style.transform = 'translateY(0)';
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

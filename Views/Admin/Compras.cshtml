@@ -1,0 +1,35 @@
+@model IEnumerable<app1.Models.Compra>
+@{
+    ViewData["Title"] = "Compras realizadas";
+}
+<h2>Compras realizadas</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Detalles</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var compra in Model)
+    {
+        <tr>
+            <td>@(string.IsNullOrEmpty(compra.UsuarioId) ? "Anónimo" : compra.UsuarioId)</td>
+            <td>@compra.UsuarioEmail</td>
+            <td>@compra.FechaCompra.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>S/ @compra.MontoTotal.ToString("N2")</td>
+            <td>
+                <ul>
+                @foreach (var d in compra.Detalles)
+                {
+                    <li>@d.ViajeTitulo - @d.FechaSalida.ToShortDateString() x@d.Cantidad (S/ @d.PrecioUnitario.ToString("N2"))</li>
+                }
+                </ul>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

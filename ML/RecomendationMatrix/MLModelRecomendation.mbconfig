@@ -1,0 +1,162 @@
+﻿{
+  "Scenario": "Recommendation",
+  "DataSource": {
+    "Version": 3,
+    "EscapeCharacter": "\"",
+    "ReadMultiLines": false,
+    "KeepDiacritics": false,
+    "KeepPunctuations": false,
+    "AllowQuoting": false,
+    "Type": "TabularFile",
+    "FilePath": "C:\\Users\\fduar\\Downloads\\RatingFictisio.csv",
+    "Delimiter": ";",
+    "DecimalMarker": ".",
+    "HasHeader": true,
+    "ColumnProperties": [
+      {
+        "ColumnName": "userId",
+        "ColumnPurpose": "User",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "productId",
+        "ColumnPurpose": "Item",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "rating",
+        "ColumnPurpose": "Label",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "timestamp",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      }
+    ]
+  },
+  "Environment": {
+    "Type": "LocalCPU",
+    "Version": 1
+  },
+  "RunHistory": {
+    "Version": 3,
+    "Type": "Result",
+    "Trials": [
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 0.86163666805318,
+        "RuntimeInSeconds": 2.999,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "productId",
+            "InputColumnName": "productId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "userId",
+            "InputColumnName": "userId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "rating",
+            "MatrixColumnIndexColumnName": "userId",
+            "MatrixRowIndexColumnName": "productId",
+            "ApproximationRank": 15,
+            "LearningRate": 0.11160239054773088,
+            "NumberOfIterations": 118,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "userId",
+            "InputColumnName": "userId"
+          },
+          "e4": {
+            "OutputColumnName": "productId",
+            "InputColumnName": "productId"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 0.87098224108620137,
+        "RuntimeInSeconds": 7.83,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "productId",
+            "InputColumnName": "productId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "userId",
+            "InputColumnName": "userId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "rating",
+            "MatrixColumnIndexColumnName": "userId",
+            "MatrixRowIndexColumnName": "productId",
+            "ApproximationRank": 35,
+            "LearningRate": 0.15769300478727064,
+            "NumberOfIterations": 306,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "userId",
+            "InputColumnName": "userId"
+          },
+          "e4": {
+            "OutputColumnName": "productId",
+            "InputColumnName": "productId"
+          }
+        }
+      }
+    ],
+    "Estimators": {
+      "e0": "MapValueToKey",
+      "e1": "MapValueToKey",
+      "e2": "MatrixFactorization",
+      "e3": "MapKeyToValue",
+      "e4": "MapKeyToValue"
+    },
+    "Schema": "e0 * e1 * e2 * e3 * e4",
+    "MetricName": "MSE",
+    "ModelFilePath": "C:\\Users\\fduar\\source\\repos\\ConsoleAppClassificacion\\ConsoleAppRecomendation\\MLModelRecomendation.mlnet"
+  },
+  "Type": "TrainingConfig",
+  "Version": 5,
+  "TrainingOption": {
+    "Version": 2,
+    "Subsampling": false,
+    "Tuner": "eci-cfo",
+    "Type": "RecommendationTrainingOption",
+    "TrainingTime": 10,
+    "OptimizeMetric": "MSE",
+    "LabelColumn": "rating",
+    "UserIdColumn": "userId",
+    "ItemIdColumn": "productId",
+    "ValidationOption": {
+      "Version": 0,
+      "Type": "TrainValidateSplitValidationOption",
+      "SplitRatio": 0.2
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@model IEnumerable<app1.Models.Departamento>
+@{
+    ViewData["Title"] = "Departamentos";
+}
+<h2>Departamentos</h2>
+@if (User.IsInRole("Admin"))
+{
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="Nombre" class="form-control" placeholder="Nuevo departamento" required />
+            <input type="file" name="Imagen" class="form-control" accept="image/*" required />
+            <button type="submit" class="btn btn-success">Agregar</button>
+        </div>
+    </form>
+}
+<ul>
+@foreach (var item in Model)
+{
+    <li>
+        @item.Nombre
+        @if (!string.IsNullOrEmpty(item.Imagen))
+        {
+            <img src="~/img/departamentos/@item.Imagen" alt="Imagen de @item.Nombre" style="max-width:60px;max-height:60px;margin-left:10px;" />
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este departamento?');">
+                <button type="submit" class="btn btn-sm btn-danger ms-1">Eliminar</button>
+            </form>
+        }
+    </li>
+}
+</ul>

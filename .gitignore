@@ -1,0 +1,37 @@
+# Archivos y carpetas de compilación
+bin/
+obj/
+
+# Archivos de usuario y configuración local
+*.user
+*.suo
+*.db
+*.log
+
+# Configuración de VSCode
+.vscode/
+
+# Archivos de migración temporales
+*.bak
+*.tmp
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de subida de usuarios (ajusta según tu app)
+wwwroot/uploads/
+
+# Archivos de credenciales sensibles (ajusta según tu app)
+*.json
+!appsettings.json
+!appsettings.Development.json
+
+# Otros
+*.swp
+*.swn
+*.swo
+
+# Archivos de configuración sensibles
+appsettings.json
+appsettings.Development.json

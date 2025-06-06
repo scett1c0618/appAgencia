@@ -1,0 +1,112 @@
+@{
+    ViewData["Title"] = "Clima actual";
+    var clima = ViewBag.Clima != null ? ((System.Text.Json.JsonDocument)ViewBag.Clima).RootElement : (System.Text.Json.JsonElement?)null;
+    var ciudad = ViewBag.Ciudad as string;
+    var ciudadesPeru = new[] {
+        "Lima", "Arequipa", "Trujillo", "Chiclayo", "Piura", "Cusco", "Iquitos", "Tacna", "Pucallpa", "Huancayo", "Chimbote", "Juliaca", "Sullana", "Ayacucho", "Cajamarca", "Puno", "Tarapoto", "Tumbes", "Huaraz", "Ica"
+    };
+    // Procesar pronóstico para la vista
+    var resumenPronostico = new List<dynamic>();
+    if (ViewBag.Pronostico != null)
+    {
+        var pronostico = ((System.Text.Json.JsonDocument)ViewBag.Pronostico).RootElement;
+        var grupos = pronostico.GetProperty("list")
+            .EnumerateArray()
+            .GroupBy(x => x.GetProperty("dt_txt").GetString().Substring(0, 10))
+            .Take(5)
+            .ToList();
+        foreach (var dia in grupos)
+        {
+            var fecha = DateTime.Parse(dia.Key);
+            var diaSemana = fecha.ToString("dddd");
+            var tempMax = dia.Max(x => x.GetProperty("main").GetProperty("temp_max").GetDecimal());
+            var tempMin = dia.Min(x => x.GetProperty("main").GetProperty("temp_min").GetDecimal());
+            var muestra = dia.First();
+            var icon = muestra.GetProperty("weather")[0].GetProperty("icon").GetString();
+            var desc = muestra.GetProperty("weather")[0].GetProperty("description").GetString();
+            resumenPronostico.Add(new {
+                DiaSemana = diaSemana,
+                Fecha = fecha.ToString("dd/MM"),
+                Icon = icon,
+                TempMax = tempMax,
+                TempMin = tempMin,
+                Desc = desc
+            });
+        }
+    }
+}
+<div class="container py-5" style="min-height:80vh; background: linear-gradient(120deg, var(--color-secundario) 0%, var(--color-gris) 100%);">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <img src="/img/logo/logo-viajes.png" alt="Agencia de Viajes" style="max-width:60px;">
+                        <h2 class="fw-bold mt-2">Clima en @ciudad</h2>
+                        <p class="text-muted">Consulta el clima actual y el pronóstico de los próximos días en las principales ciudades del Perú.</p>
+                    </div>
+                    @if (ViewBag.Clima != null)
+                    {
+                        <div class="card mb-4 mx-auto" style="max-width: 22rem; background: var(--color-gris);">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-3" style="color:var(--color-primario);">
+                                    <img src="https://openweathermap.org/img/wn/@(clima?.GetProperty("weather")[0].GetProperty("icon").GetString() + "@2x.png")" alt="icono clima" style="width:48px;vertical-align:middle;"> @clima?.GetProperty("weather")[0].GetProperty("description").GetString()
+                                </h5>
+                                <p class="card-text mb-1">
+                                    <span class="fw-semibold">Temperatura:</span> <span style="color:var(--color-primario);">@clima?.GetProperty("main").GetProperty("temp").GetDecimal()°C</span>
+                                </p>
+                                <p class="card-text mb-1">
+                                    <span class="fw-semibold">Sensación térmica:</span> @clima?.GetProperty("main").GetProperty("feels_like").GetDecimal()°C
+                                </p>
+                                <p class="card-text mb-1">
+                                    <span class="fw-semibold">Humedad:</span> @clima?.GetProperty("main").GetProperty("humidity").GetInt32()%
+                                </p>
+                                <p class="card-text mb-0">
+                                    <span class="fw-semibold">Viento:</span> @clima?.GetProperty("wind").GetProperty("speed").GetDecimal() m/s
+                                </p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning text-center">No se pudo obtener la información del clima o la API respondió con error.</div>
+                    }
+                    @if (resumenPronostico.Count > 0)
+                    {
+                        <h4 class="mt-4 mb-3 text-center">Pronóstico próximos días</h4>
+                        <div class="d-flex flex-row flex-nowrap overflow-auto justify-content-center" style="gap:1rem;">
+                            @foreach (var dia in resumenPronostico)
+                            {
+                                string tempMaxStr = ((decimal)dia.TempMax).ToString("N0");
+                                string tempMinStr = ((decimal)dia.TempMin).ToString("N0");
+                                string iconUrl = $"https://openweathermap.org/img/wn/{dia.Icon}@2x.png";
+                                <div class="card text-center shadow-sm border-0" style="min-width: 140px; background: var(--color-fondo);">
+                                    <div class="card-body p-2">
+                                        <div class="fw-bold" style="color:var(--color-primario);">@dia.DiaSemana</div>
+                                        <div class="mb-1">@dia.Fecha</div>
+                                        <img src="@iconUrl" alt="@dia.Desc" style="width:48px;height:48px;" />
+                                        <div><span class="text-danger">@tempMaxStr°C</span> / <span class="text-primary">@tempMinStr°C</span></div>
+                                        <small class="text-muted">@dia.Desc</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <form method="get" class="mt-4">
+                        <div class="form-group mb-3">
+                            <label for="ciudad" class="fw-semibold">Consultar otra ciudad:</label>
+                            <input list="ciudadesPeru" name="ciudad" id="ciudad" class="form-control" placeholder="Ej: Cusco" value="@ciudad" autocomplete="off" />
+                            <datalist id="ciudadesPeru">
+                                @foreach (var c in ciudadesPeru)
+                                {
+                                    <option value="@c"></option>
+                                }
+                            </datalist>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm w-100">Consultar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

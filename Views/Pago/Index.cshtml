@@ -1,0 +1,29 @@
+@model IEnumerable<app1.Models.Reserva>
+@{
+    ViewData["Title"] = "Pago de Reservas";
+}
+<h2>Resumen de tu compra</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Viaje</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Viaje?.Titulo</td>
+            <td>@item.Cantidad</td>
+            <td>S/ @string.Format("{0:N2}", item.Viaje?.Precio)</td>
+            <td>S/ @string.Format("{0:N2}", item.Cantidad * item.Viaje.Precio)</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<form asp-action="Crear" method="post">
+    <button type="submit" class="btn btn-primary">Pagar con MercadoPago</button>
+</form>

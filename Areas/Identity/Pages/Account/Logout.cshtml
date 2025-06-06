@@ -1,0 +1,8 @@
+@page
+@model app1.Areas.Identity.Pages.Account.LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+<form method="post">
+    <input type="hidden" name="returnUrl" value="@Request.Query["returnUrl"]" />
+</form>

@@ -1,0 +1,57 @@
+@model IEnumerable<app1.Models.Reserva>
+@{
+    ViewData["Title"] = "Mis Reservas";
+    bool isAnon = !User.Identity.IsAuthenticated;
+}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Mis Reservas</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Viaje</th>
+                    <th>Fecha de Salida</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de Reserva</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Viaje?.Titulo</td>
+                    <td>@item.FechaSalida.ToShortDateString()</td>
+                    <td>@item.Cantidad</td>
+                    <td>@item.FechaReserva.ToShortDateString()</td>
+                    <td>
+                        <a asp-controller="Viajes" asp-action="Details" asp-route-id="@item.ViajeId" asp-route-fechaSalidaId="@item.FechaSalidaViajeId" asp-route-cantidad="@item.Cantidad" asp-route-modificar="true" class="btn btn-sm btn-warning">Modificar</a>
+                        <form asp-action="Eliminar" asp-route-id="@item.Id" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas quitar este viaje de tu carrito?')">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <form asp-action="Checkout" method="post">
+            <button type="submit" class="btn btn-primary">Continuar compra</button>
+        </form>
+        @if (isAnon)
+        {
+            <div class="alert alert-info mt-3">Para finalizar la compra debes iniciar sesión o registrarte.</div>
+        }
+    </div>
+    <div class="col-md-4">
+        <h5>Resumen de compra</h5>
+        <ul class="list-group mb-3">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @item.Viaje?.Titulo <span class="badge bg-primary rounded-pill">@item.Cantidad</span>
+                </li>
+            }
+        </ul>
+        <div class="mb-3"><strong>Total: S/ @Model.Sum(r => r.Cantidad * (r.Viaje?.Precio ?? 0)).ToString("N2")</strong></div>
+    </div>
+</div>

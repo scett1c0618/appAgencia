@@ -1,0 +1,3 @@
+<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
+
+Este proyecto es una aplicación ASP.NET MVC para una agencia de viajes peruana. Utiliza PostgreSQL, autenticación Individual y sigue una estructura similar a una tienda online, pero adaptada a viajes y reservas. Prioriza buenas prácticas de arquitectura, separación de áreas para clientes y administradores, e integración con APIs externas (MercadoPago, mapas, publicaciones en redes sociales).

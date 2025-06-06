@@ -1,0 +1,39 @@
+@model app1.Models.Departamento
+@{
+    ViewData["Title"] = "Editar Departamento";
+}
+<h2>Editar Departamento</h2>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Imagen actual</label><br />
+        @if (!string.IsNullOrEmpty(Model.Imagen))
+        {
+            <img src="~/img/departamentos/@Model.Imagen" alt="Imagen actual" style="max-width:100px;max-height:100px;" />
+        }
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cambiar imagen</label>
+        <input type="file" name="NuevaImagen" class="form-control" accept="image/*" />
+        <span asp-validation-for="Imagen" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

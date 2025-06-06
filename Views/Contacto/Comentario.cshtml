@@ -1,0 +1,70 @@
+@model app1.Models.Contacto
+@{
+    ViewData["Title"] = "Comentar sobre un viaje";
+    var mensaje = ViewData["Message"] as string;
+    var viajes = ViewBag.ViajesComprados as List<app1.Models.Viaje>;
+}
+<div class="container py-5" style="min-height:80vh; background: linear-gradient(120deg, var(--color-secundario) 0%, var(--color-gris) 100%);">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <img src="/img/logo/logo-viajes.png" alt="Agencia de Viajes" style="max-width:70px;">
+                        <h2 class="fw-bold mt-2">Deja tu comentario</h2>
+                        <p class="text-muted">Solo puedes comentar sobre viajes que hayas comprado.</p>
+                    </div>
+                    @if (!string.IsNullOrEmpty(mensaje))
+                    {
+                        <div class="alert alert-success">@mensaje</div>
+                    }
+                    <form asp-action="RegistrarComentario" method="post" class="row g-3">
+                        <div class="col-md-12">
+                            <label for="ViajeId" class="form-label">Viaje</label>
+                            @if (viajes != null && viajes.Any())
+                            {
+                                <select asp-for="ViajeId" class="form-control" required id="ViajeId">
+                                    <option value="">Selecciona un viaje</option>
+                                    @foreach (var v in viajes)
+                                    {
+                                        <option value="@v.Id">@v.Titulo</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <select asp-for="ViajeId" class="form-control" id="ViajeId" disabled>
+                                    <option value="">Sin opciones</option>
+                                </select>
+                            }
+                            <span asp-validation-for="ViajeId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="Mensaje" class="form-label">Comentario</label>
+                            <textarea asp-for="Mensaje" class="form-control" rows="4" required></textarea>
+                            <span asp-validation-for="Mensaje" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm w-100" id="btnEnviar" disabled>Enviar comentario</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Habilitar el botón solo si todos los campos están completos
+        function validarCampos() {
+            var viaje = document.getElementById('ViajeId');
+            var mensaje = document.getElementById('Mensaje');
+            var btn = document.getElementById('btnEnviar');
+            btn.disabled = !(viaje && viaje.value && mensaje && mensaje.value.trim().length > 0);
+        }
+        document.getElementById('ViajeId')?.addEventListener('change', validarCampos);
+        document.getElementById('Mensaje')?.addEventListener('input', validarCampos);
+        window.onload = validarCampos;
+    </script>
+}

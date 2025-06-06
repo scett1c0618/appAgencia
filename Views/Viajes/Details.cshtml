@@ -1,0 +1,112 @@
+@model app1.Models.Viaje
+@{
+    ViewData["Title"] = "Detalles del Viaje";
+    var fechaSeleccionada = Context.Request.Query["fechaSalidaId"].FirstOrDefault();
+    var cantidadSeleccionada = Context.Request.Query["cantidad"].FirstOrDefault();
+    var fechas = Model.FechasSalida ?? new List<app1.Models.FechaSalidaViaje>();
+}
+<div class="container py-5" style="min-height:80vh; background: linear-gradient(120deg, var(--color-secundario) 0%, var(--color-gris) 100%);">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5 text-center">
+                            @if (!string.IsNullOrEmpty(Model.Imagen))
+                            {
+                                <img src="~/img/viajes/@Model.Imagen" alt="Imagen de @Model.Titulo" class="img-fluid rounded-4 shadow-sm mb-3" style="max-height:320px; object-fit:cover;">
+                            }
+                        </div>
+                        <div class="col-md-7">
+                            <h2 class="fw-bold mb-3" style="color:var(--color-primario);">@Model.Titulo</h2>
+                            <p><strong>Descripción:</strong> @Model.Descripcion</p>
+                            <p><strong>Departamento:</strong> <span class="badge bg-acento text-dark">@Model.Departamento?.Nombre</span></p>
+                            <p><strong>Precio:</strong> <span style="color:var(--color-primario);">S/ @string.Format("{0:N2}", Model.Precio)</span></p>
+                            <a asp-action="Index" class="btn btn-secondary mb-3">Volver al catálogo</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- Mostrar fechas de salida disponibles -->
+                    @if (fechas.Any())
+                    {
+                        <h4 class="mt-4">Fechas de salida disponibles</h4>
+                        <ul>
+                            @foreach (var fecha in (Model.FechasSalida ?? new List<app1.Models.FechaSalidaViaje>()).Where(f => f.FechaSalida >= DateTime.Today && f.AsientosDisponibles > 0).OrderBy(f => f.FechaSalida))
+                            {
+                                <li>
+                                    @fecha.FechaSalida.ToString("dd/MM/yyyy") - @fecha.HoraSalida.ToString(@"hh\:mm") - Asientos: @fecha.AsientosDisponibles
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-danger">No hay fechas de salida disponibles.</p>
+                    }
+                    <form asp-controller="Reserva" asp-action="Agregar" method="post">
+                        <input type="hidden" name="viajeId" value="@Model.Id" />
+                        <input type="hidden" name="modificar" value="@((ViewBag.Modificar != null && ViewBag.Modificar) ? "true" : "false")" />
+                        <div class="mb-3">
+                            <label for="fechaSalidaId" class="form-label">Fecha de salida</label>
+                            <select name="fechaSalidaId" id="fechaSalidaId" class="form-control" required>
+                                <option value="">Seleccione una fecha</option>
+                                @foreach (var fecha in Model.FechasSalida.Where(f => f.FechaSalida >= DateTime.Today && f.AsientosDisponibles > 0).OrderBy(f => f.FechaSalida))
+                                {
+                                    var texto = $"{fecha.FechaSalida:dd/MM/yyyy} - {fecha.HoraSalida:hh\\:mm} - {fecha.AsientosDisponibles} asientos";
+                                    if ((ViewBag.FechaSalidaId != null && ViewBag.FechaSalidaId.ToString() == fecha.Id.ToString()) || (fechaSeleccionada == fecha.Id.ToString()))
+                                    {
+                                        @:<option value="@fecha.Id" selected>@texto</option>
+                                    }
+                                    else
+                                    {
+                                        @:<option value="@fecha.Id">@texto</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cantidad" class="form-label">Cantidad de asientos</label>
+                            <input type="number" name="cantidad" id="cantidad" class="form-control" min="1" value="@(ViewBag.Cantidad ?? (string.IsNullOrEmpty(cantidadSeleccionada) ? "1" : cantidadSeleccionada))" required />
+                        </div>
+                        <button type="submit" class="btn btn-success" @(Model.FechasSalida.Any(f => f.FechaSalida >= DateTime.Today && f.AsientosDisponibles > 0) ? "" : "disabled")>Agregar al carrito</button>
+                    </form>
+                    <hr />
+                    <!-- Sección de comentarios -->
+                    <div class="mt-4">
+                        <h4>Comentarios de viajeros (@(ViewBag.TotalComentarios ?? 0))</h4>
+                        @if (ViewBag.Comentarios != null && ((List<app1.Models.Contacto>)ViewBag.Comentarios).Any())
+                        {
+                            foreach (var c in (List<app1.Models.Contacto>)ViewBag.Comentarios)
+                            {
+                                <div class="card mb-2 shadow-sm border-0">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="fw-bold">@c.Nombre</span>
+                                            <span class="badge bg-info text-dark">@c.Etiqueta</span>
+                                        </div>
+                                        <p class="mb-1">@c.Mensaje</p>
+                                        <small class="text-muted">@c.FechaEnvio.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</small>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted">Aún no hay comentarios para este viaje.</p>
+                        }
+                        <div class="mt-3">
+                            @if ((User?.Identity?.IsAuthenticated) == true)
+                            {
+                                <a asp-controller="Contacto" asp-action="Comentario" class="btn btn-outline-primary">Dejar un comentario</a>
+                            }
+                            else
+                            {
+                                <a href="/Identity/Account/Login?returnUrl=@(Context.Request.Path + Context.Request.QueryString)" class="btn btn-outline-primary">Inicia sesión para comentar</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

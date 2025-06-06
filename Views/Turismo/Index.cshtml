@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = $"Información turística de {ViewBag.Ciudad}";
+    var ciudad = ViewBag.Ciudad as string;
+    var resumen = ViewBag.Resumen as string;
+    var imagen = ViewBag.Imagen as string;
+    var urlWiki = ViewBag.UrlWiki as string;
+    var sugerencias = ViewBag.Sugerencias as string[];
+}
+<h2 class="mb-4">Información turística y cultural de <span class="text-primary">@ciudad</span></h2>
+<form method="get" class="mb-4 row g-2">
+    <div class="col-md-6">
+        <input type="text" name="ciudad" class="form-control form-control-lg" value="@ciudad" placeholder="Ej: Cusco, Arequipa, Machu Picchu" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+    </div>
+</form>
+@if (!string.IsNullOrEmpty(resumen))
+{
+    <div class="row mb-4">
+        <div class="col-md-5">
+            @if (!string.IsNullOrEmpty(imagen))
+            {
+                <img src="@imagen" alt="@ciudad" class="img-fluid rounded shadow mb-3 w-100" style="max-height:350px;object-fit:cover;" />
+            }
+        </div>
+        <div class="col-md-7 d-flex flex-column justify-content-center">
+            <div class="bg-light p-3 rounded shadow-sm mb-2" style="font-size:1.15rem;">
+                @resumen
+            </div>
+            @if (!string.IsNullOrEmpty(urlWiki))
+            {
+                <a href="@urlWiki" target="_blank" class="btn btn-outline-secondary mt-2">Ver más en Wikipedia</a>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="mt-4">¿Sabías que...?</h4>
+            <div class="alert alert-info">
+                Esta información es obtenida en tiempo real desde Wikipedia. Puedes explorar más detalles, historia, cultura y atractivos turísticos en el enlace superior.
+            </div>
+        </div>
+    </div>
+}
+else if (sugerencias != null && sugerencias.Length > 0)
+{
+    <div class="alert alert-warning mt-4">
+        No se encontró información turística exacta para la ciudad o lugar seleccionado.<br />
+        <strong>¿Quizás quisiste buscar?</strong>
+        <ul class="mt-2">
+            @foreach (var sug in sugerencias)
+            {
+                <li>
+                    <form method="get" style="display:inline">
+                        <input type="hidden" name="ciudad" value="@sug" />
+                        <button type="submit" class="btn btn-link p-0 align-baseline">@sug</button>
+                    </form>
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning mt-4">No se encontró información turística para la ciudad o lugar seleccionado.</div>
+}

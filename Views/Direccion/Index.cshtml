@@ -1,0 +1,28 @@
+@model app1.Models.Direccion
+@{
+    ViewData["Title"] = "Dirección de envío";
+}
+<h2>Dirección de envío</h2>
+<form asp-action="GuardarDireccion" method="post">
+    <div class="mb-3">
+        <label asp-for="Departamento" class="form-label">Departamento</label>
+        <input asp-for="Departamento" class="form-control" required />
+        <span asp-validation-for="Departamento" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Provincia" class="form-label">Provincia</label>
+        <input asp-for="Provincia" class="form-control" required />
+        <span asp-validation-for="Provincia" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Distrito" class="form-label">Distrito</label>
+        <input asp-for="Distrito" class="form-control" required />
+        <span asp-validation-for="Distrito" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DireccionTexto" class="form-label">Dirección</label>
+        <input asp-for="DireccionTexto" class="form-control" required />
+        <span asp-validation-for="DireccionTexto" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Confirmar</button>
+</form>

@@ -1,0 +1,140 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Paleta de colores profesional */
+:root {
+  --color-primario: #1e3c72;
+  --color-secundario: #cfdef3;
+  --color-fondo: #ffffff;
+  --color-acento: #ffd700;
+  --color-verde: #43bfae;
+  --color-gris: #f5f6fa;
+}
+
+body {
+  background-color: var(--color-fondo);
+}
+
+/* Navbar personalizado para coherencia visual */
+.navbar {
+  font-family: "Segoe UI", "Arial", sans-serif;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 8px rgba(30, 60, 114, 0.04);
+  background: linear-gradient(
+    90deg,
+    var(--color-secundario) 0%,
+    var(--color-gris) 100%
+  );
+  color: var(--color-primario);
+}
+.navbar .navbar-brand {
+  letter-spacing: 1px;
+}
+.navbar .nav-link {
+  transition: color 0.2s;
+  color: var(--color-primario) !important;
+}
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+  color: var(--color-acento) !important;
+  background: rgba(62, 142, 222, 0.07);
+  border-radius: 0.5rem;
+}
+.navbar .dropdown-menu {
+  border-radius: 0.7rem;
+  box-shadow: 0 4px 16px rgba(30, 60, 114, 0.08);
+}
+
+/* Estilos para botones */
+.btn-primary {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--color-acento);
+  border-color: var(--color-acento);
+  color: var(--color-primario);
+}
+
+.btn-success {
+  background-color: var(--color-verde);
+  border-color: var(--color-verde);
+}
+
+/* Estilos para tarjetas */
+.card {
+  border: none;
+  background: var(--color-fondo);
+  box-shadow: 0 2px 16px rgba(30, 60, 114, 0.08);
+}
+
+/* Textos y fondos acentuados */
+.text-acento {
+  color: var(--color-acento) !important;
+}
+
+.bg-acento {
+  background-color: var(--color-acento) !important;
+}
+
+.bg-gris {
+  background-color: var(--color-gris) !important;
+}
+
+/* Ajustes para formularios y tarjetas */
+.form-control:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 0.2rem rgba(30, 60, 114, 0.1);
+}
+
+h2,
+h1,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-primario);
+}
+
+/* Responsive ajustes para navbar */
+@media (max-width: 991.98px) {
+  .navbar .navbar-brand {
+    font-size: 1.2rem;
+  }
+}

@@ -1,0 +1,45 @@
+@model IEnumerable<app1.Models.Contacto>
+@{
+    ViewData["Title"] = "Mensajes de Contacto";
+}
+<h2 class="mb-4">Mensajes de Contacto</h2>
+<table class="table table-bordered table-hover table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Mensaje</th>
+            <th>Etiqueta</th>
+            <th>Puntuación</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.FechaEnvio.ToLocalTime().ToString("g")</td>
+            <td>@item.Nombre</td>
+            <td>@item.Correo</td>
+            <td>@item.Telefono</td>
+            <td>@item.Mensaje</td>
+            <td>
+                @if (item.Etiqueta == "Positivo")
+                {
+                    <span class="badge bg-success">Positivo</span>
+                }
+                else if (item.Etiqueta == "Negativo")
+                {
+                    <span class="badge bg-danger">Negativo</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Sin clasificar</span>
+                }
+            </td>
+            <td>@item.Puntuacion.ToString("N2")</td>
+        </tr>
+    }
+    </tbody>
+</table>

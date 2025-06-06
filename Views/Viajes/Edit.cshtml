@@ -1,0 +1,363 @@
+@model app1.Models.Viaje
+@{
+    ViewData["Title"] = "Editar Viaje";
+}
+<h2>Editar Viaje</h2>
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Titulo" class="form-label"></label>
+        <input asp-for="Titulo" class="form-control" />
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Descripcion" class="form-label"></label>
+        <textarea asp-for="Descripcion" class="form-control"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Precio" class="form-label"></label>
+        <input asp-for="Precio" class="form-control" />
+        <span asp-validation-for="Precio" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DepartamentoId" class="form-label">Departamento</label>
+        <select asp-for="DepartamentoId" class="form-control" asp-items="ViewBag.Departamentos"></select>
+        <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cambiar imagen</label>
+        <input type="file" name="NuevaImagen" class="form-control" accept="image/*" required />
+        <span asp-validation-for="Imagen" class="text-danger"></span>
+    </div>
+    <div id="fechas-container">
+        <label class="form-label">Fechas de salida y asientos</label>
+        <div class="row mb-2">
+            <div class="col">
+                <input type="date" id="nuevaFecha" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="col">
+                <input type="time" id="nuevaHora" class="form-control" />
+            </div>
+            <div class="col">
+                <input type="number" id="nuevosAsientos" class="form-control" min="1" placeholder="Asientos disponibles" />
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-success" id="btnAgregarFecha" onclick="agregarFecha()" disabled>Agregar</button>
+            </div>
+        </div>
+        <div id="hora-error" class="text-danger mb-2" style="display:none;"></div>
+        <div id="asientos-error" class="text-danger mb-2" style="display:none;"></div>
+        <ul id="lista-fechas">
+            @if (Model.FechasSalida != null)
+            {
+                foreach (var fecha in Model.FechasSalida.OrderBy(f => f.FechaSalida))
+                {
+                    <li>
+                        <input type="hidden" name="fechasSalidaIds" value="@fecha.Id" />
+                        Fecha: <input type="date" name="fechasSalida" value="@fecha.FechaSalida.ToString("yyyy-MM-dd")" class="form-control d-inline-block w-auto" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        - Hora: <input type="time" name="horasSalida" value="@fecha.HoraSalida.ToString(@"hh\:mm")" class="form-control d-inline-block w-auto" />
+                        - Asientos: <input type="number" name="asientosPorFecha" value="@fecha.AsientosDisponibles" class="form-control d-inline-block w-auto" min="1" />
+                        <button type="button" class="btn btn-sm btn-danger ms-2" onclick="this.parentNode.remove()">Quitar</button>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <script>
+        function validarHoraActual() {
+            var fecha = document.getElementById('nuevaFecha').value;
+            var hora = document.getElementById('nuevaHora').value;
+            var errorDiv = document.getElementById('hora-error');
+            errorDiv.style.display = 'none';
+            if (!fecha || !hora) return true;
+            var hoy = new Date();
+            var fechaSeleccionada = new Date(fecha + 'T00:00');
+            if (fechaSeleccionada.toDateString() === hoy.toDateString()) {
+                var [h, m] = hora.split(":");
+                var horaSeleccionada = new Date();
+                horaSeleccionada.setHours(parseInt(h), parseInt(m), 0, 0);
+                if (horaSeleccionada <= hoy) {
+                    document.getElementById('nuevaHora').value = '';
+                    errorDiv.textContent = 'La hora debe ser mayor al momento actual.';
+                    errorDiv.style.display = 'block';
+                    return false;
+                }
+            }
+            return true;
+        }
+        document.getElementById('nuevaHora').addEventListener('change', validarHoraActual);
+        document.getElementById('nuevaFecha').addEventListener('change', function() {
+            document.getElementById('nuevaHora').value = '';
+            document.getElementById('hora-error').style.display = 'none';
+        });
+        function fechaHoraEsValida(f, h) {
+            if (!f || !h) return false;
+            var ahora = new Date();
+            var [hh, mm] = h.split(":");
+            var fechaHora = new Date(f + 'T' + hh.padStart(2, '0') + ':' + mm.padStart(2, '0'));
+            return fechaHora > ahora;
+        }
+        function limpiarFechasNoValidas() {
+            var ahora = new Date();
+            var items = document.querySelectorAll('#lista-fechas li');
+            items.forEach(function(li) {
+                var fechaInput = li.querySelector("input[name='fechasSalida']");
+                var horaInput = li.querySelector("input[name='horasSalida']");
+                if (!fechaInput || !horaInput) return;
+                var fecha = fechaInput.value;
+                var hora = horaInput.value;
+                var [hh, mm] = hora.split(":");
+                var fechaHora = new Date(fecha + 'T' + hh.padStart(2, '0') + ':' + mm.padStart(2, '0'));
+                if (fechaHora <= ahora) {
+                    li.remove();
+                }
+            });
+        }
+        function agregarFecha() {
+            var fecha = document.getElementById('nuevaFecha').value;
+            var hora = document.getElementById('nuevaHora').value;
+            var asientos = document.getElementById('nuevosAsientos').value;
+            var errorDiv = document.getElementById('hora-error');
+            errorDiv.style.display = 'none';
+            if (!fecha || !hora || !asientos || asientos < 1) return;
+            if (!fechaHoraEsValida(fecha, hora)) {
+                errorDiv.textContent = 'La fecha y hora deben ser mayores al momento actual.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            var ul = document.getElementById('lista-fechas');
+            var li = document.createElement('li');
+            li.innerHTML = `<input type='hidden' name='fechasSalidaIds' value='0' />` +
+                `Fecha: <input type='date' name='fechasSalida' value='${fecha}' class='form-control d-inline-block w-auto' min='@DateTime.Today.ToString("yyyy-MM-dd")' />` +
+                ` - Hora: <input type='time' name='horasSalida' value='${hora}' class='form-control d-inline-block w-auto' />` +
+                ` - Asientos: <input type='number' name='asientosPorFecha' value='${asientos}' class='form-control d-inline-block w-auto' min='1' />` +
+                `<button type='button' class='btn btn-sm btn-danger ms-2' onclick='this.parentNode.remove()'>Quitar</button>`;
+            ul.appendChild(li);
+            document.getElementById('nuevaFecha').value = '';
+            document.getElementById('nuevaHora').value = '';
+            document.getElementById('nuevosAsientos').value = '';
+            limpiarFechasNoValidas();
+        }
+        function validarCamposFechaSalida() {
+            var fecha = document.getElementById('nuevaFecha').value;
+            var hora = document.getElementById('nuevaHora').value;
+            var asientos = document.getElementById('nuevosAsientos').value;
+            var btnAgregar = document.getElementById('btnAgregarFecha');
+            var asientosInt = Number(asientos);
+            var asientosError = document.getElementById('asientos-error');
+            var habilitar = fecha && hora && asientos && asientosInt > 0 && Number.isInteger(Number(asientos));
+            // Mostrar mensaje solo si el usuario ingresó algo en asientos
+            if (asientos !== "" && (!asientos || asientosInt <= 0 || !Number.isInteger(Number(asientos)))) {
+                asientosError.textContent = 'Ingrese un número entero positivo de asientos.';
+                asientosError.style.display = 'block';
+            } else {
+                asientosError.style.display = 'none';
+            }
+            btnAgregar.disabled = !habilitar;
+        }
+        document.getElementById('nuevaFecha').addEventListener('input', validarCamposFechaSalida);
+        document.getElementById('nuevaHora').addEventListener('input', validarCamposFechaSalida);
+        document.getElementById('nuevosAsientos').addEventListener('input', validarCamposFechaSalida);
+        // Llamar al cargar la página
+        validarCamposFechaSalida();
+        // Llamar también después de agregar o quitar fechas
+        // (NO redefinir agregarFecha aquí, ya está definida arriba)
+        // Habilitar validación tras quitar fechas
+        document.getElementById('lista-fechas').addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-danger')) {
+                setTimeout(validarCamposFechaSalida, 100);
+            }
+        });
+        // Evitar que los inputs principales se envíen si están vacíos
+        document.querySelector('form').addEventListener('submit', function(e) {
+            document.getElementById('nuevaFecha').disabled = true;
+            document.getElementById('nuevaHora').disabled = true;
+            document.getElementById('nuevosAsientos').disabled = true;
+        });
+        // Al cargar la página, limpiar fechas/hora/asientos inválidos
+        document.addEventListener('DOMContentLoaded', limpiarFechasNoValidas);
+        function agregarListenersSlots() {
+            var items = document.querySelectorAll('#lista-fechas li');
+            items.forEach(function(li) {
+                var inputFecha = li.querySelector("input[name='fechasSalida']");
+                var inputHora = li.querySelector("input[name='horasSalida']");
+                var inputAsientos = li.querySelector("input[name='asientosPorFecha']");
+                if (inputFecha) {
+                    inputFecha.addEventListener('change', function() {
+                        if (inputHora) inputHora.value = '';
+                        validarSlotsFechas();
+                        validarBotonGuardar();
+                    });
+                }
+                if (inputHora) inputHora.addEventListener('change', function() { validarSlotsFechas(); validarBotonGuardar(); });
+                if (inputAsientos) inputAsientos.addEventListener('input', function() { validarSlotsFechas(); validarBotonGuardar(); });
+            });
+        }
+        function validarBotonGuardar() {
+            // Si hay algún error de slot visible, deshabilitar el botón guardar
+            var hayError = document.querySelector('.slot-error') && Array.from(document.querySelectorAll('.slot-error')).some(e => e.style.display === 'block' && e.textContent.trim() !== '');
+            var btn = document.getElementById('btnGuardar');
+            // Además, verificar los campos obligatorios
+            var titulo = document.getElementById('Titulo').value.trim();
+            var descripcion = document.getElementById('Descripcion').value.trim();
+            var precio = document.getElementById('Precio').value;
+            var departamento = document.getElementById('DepartamentoId').value;
+            var imagen = document.querySelector("input[type='file'][name='NuevaImagen']").files.length > 0;
+            var camposObligatorios = titulo && descripcion && precio && departamento && imagen;
+            // Nueva lógica: si hay slots, todos sus campos deben estar completos
+            var slots = document.querySelectorAll('#lista-fechas li');
+            var slotsValidos = true;
+            if (slots.length > 0) {
+                slots.forEach(function(li) {
+                    var inputFecha = li.querySelector("input[name='fechasSalida']");
+                    var inputHora = li.querySelector("input[name='horasSalida']");
+                    var inputAsientos = li.querySelector("input[name='asientosPorFecha']");
+                    if (!inputFecha.value || !inputHora.value || !inputAsientos.value) {
+                        slotsValidos = false;
+                    }
+                });
+            }
+            // Si no hay slots, ignorar la lógica de slotsValidos
+            var habilitar = !hayError && camposObligatorios && (slots.length === 0 || slotsValidos);
+            if (btn) btn.disabled = !habilitar;
+        }
+        // Llamar al cargar la página y tras agregar/quitar slots
+        document.addEventListener('DOMContentLoaded', function() {
+            agregarListenersSlots();
+        });
+        // También tras agregar una fecha
+        var oldAgregarFecha = agregarFecha;
+        agregarFecha = function() {
+            oldAgregarFecha();
+            agregarListenersSlots();
+            validarSlotsFechas();
+            validarBotonGuardar();
+        };
+        // También tras quitar una fecha
+        document.getElementById('lista-fechas').addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-danger')) {
+                setTimeout(function() {
+                    agregarListenersSlots();
+                    validarSlotsFechas();
+                    validarBotonGuardar();
+                }, 100);
+            }
+        });
+        // Al validar slots en submit, también actualizar el botón
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (!validarSlotsFechas()) {
+                e.preventDefault();
+                validarBotonGuardar();
+                var primerError = document.querySelector('.slot-error[style*="block"]');
+                if (primerError) {
+                    primerError.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+            }
+        });
+    </script>
+    <button type="submit" class="btn btn-primary" id="btnGuardar" disabled>Guardar cambios</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function validarCamposObligatorios() {
+            var titulo = document.getElementById('Titulo').value.trim();
+            var descripcion = document.getElementById('Descripcion').value.trim();
+            var precio = document.getElementById('Precio').value;
+            var departamento = document.getElementById('DepartamentoId').value;
+            var imagen = document.querySelector("input[type='file'][name='NuevaImagen']").files.length > 0;
+            var valido = titulo && descripcion && precio && departamento && imagen;
+            document.getElementById('btnGuardar').disabled = !valido;
+        }
+        document.getElementById('Titulo').addEventListener('input', validarCamposObligatorios);
+        document.getElementById('Descripcion').addEventListener('input', validarCamposObligatorios);
+        document.getElementById('Precio').addEventListener('input', validarCamposObligatorios);
+        document.getElementById('DepartamentoId').addEventListener('change', validarCamposObligatorios);
+        document.querySelector("input[type='file'][name='NuevaImagen']").addEventListener('change', validarCamposObligatorios);
+        setTimeout(validarCamposObligatorios, 500);
+        validarCamposObligatorios();
+        function validarHoraActualSlot(inputHora, inputFecha, errorDiv) {
+            var fecha = inputFecha.value;
+            var hora = inputHora.value;
+            errorDiv.style.display = 'none';
+            if (!fecha || !hora) return true;
+            var hoy = new Date();
+            var fechaSeleccionada = new Date(fecha + 'T00:00');
+            if (fechaSeleccionada.toDateString() === hoy.toDateString()) {
+                var [h, m] = hora.split(":");
+                var horaSeleccionada = new Date();
+                horaSeleccionada.setHours(parseInt(h), parseInt(m), 0, 0);
+                if (horaSeleccionada <= hoy) {
+                    errorDiv.textContent = 'La hora debe ser mayor al momento actual.';
+                    errorDiv.style.display = 'block';
+                    return false;
+                }
+            }
+            return true;
+        }
+        function validarSlotsFechas() {
+            var valido = true;
+            var ahora = new Date();
+            var items = document.querySelectorAll('#lista-fechas li');
+            items.forEach(function(li) {
+                var inputFecha = li.querySelector("input[name='fechasSalida']");
+                var inputHora = li.querySelector("input[name='horasSalida']");
+                var inputAsientos = li.querySelector("input[name='asientosPorFecha']");
+                var errorDiv = li.querySelector('.slot-error');
+                if (!errorDiv) {
+                    errorDiv = document.createElement('div');
+                    errorDiv.className = 'text-danger slot-error';
+                    errorDiv.style.display = 'none';
+                    li.appendChild(errorDiv);
+                }
+                var mensajes = [];
+                // Validar asientos (no negativos, no cero, no decimales)
+                var asientos = inputAsientos.value;
+                var asientosInt = Number(asientos);
+                if (asientos !== "" && (!asientos || asientosInt <= 0 || !Number.isInteger(Number(asientos)))) {
+                    mensajes.push('Ingrese un número entero positivo de asientos.');
+                    valido = false;
+                }
+                // Validar fecha y hora: deben ser mayores al momento actual
+                var fecha = inputFecha.value;
+                var hora = inputHora.value;
+                if (fecha && hora) {
+                    var [h, m] = hora.split(":");
+                    var fechaHoraSeleccionada = new Date(fecha + 'T' + h.padStart(2, '0') + ':' + m.padStart(2, '0'));
+                    if (fechaHoraSeleccionada <= ahora) {
+                        mensajes.push('La fecha y hora deben ser mayores al momento actual.');
+                        // Si la fecha es hoy, limpiar el campo hora del slot
+                        var hoyStr = ahora.toISOString().slice(0,10);
+                        if (fecha === hoyStr) {
+                            inputHora.value = '';
+                        }
+                        valido = false;
+                    }
+                }
+                if (mensajes.length > 0) {
+                    errorDiv.innerHTML = mensajes.map(m => `<div>${m}</div>`).join('');
+                    errorDiv.style.display = 'block';
+                } else {
+                    errorDiv.innerHTML = '';
+                    errorDiv.style.display = 'none';
+                }
+            });
+            return valido;
+        }
+        // Validar slots al guardar
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (!validarSlotsFechas()) {
+                e.preventDefault();
+                // Scroll al primer error de slot
+                var primerError = document.querySelector('.slot-error[style*="block"]');
+                if (primerError) {
+                    primerError.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+            }
+        });
+    </script>
+}

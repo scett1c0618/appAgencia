@@ -1,0 +1,48 @@
+@page
+@model app1.Areas.Identity.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Iniciar Sesión - Agencia de Viajes";
+}
+<div class="container py-5" style="min-height:80vh; background: linear-gradient(120deg, var(--color-secundario) 0%, var(--color-gris) 100%);">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <img src="/img/logo/logo-viajes.png" alt="Agencia de Viajes" style="max-width:80px;">
+                        <h2 class="fw-bold mt-2">Bienvenido</h2>
+                        <p class="text-muted">Inicia sesión para gestionar tus reservas y descubrir nuevos destinos.</p>
+                    </div>
+                    <form method="post">
+                        <div class="text-danger mb-3" role="alert">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <div>@error.ErrorMessage</div>
+                            }
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input name="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Correo electrónico" />
+                            <label for="Input_Email">Correo electrónico</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input name="Input.Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Contraseña" />
+                            <label for="Input_Password">Contraseña</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input name="Input.RememberMe" type="checkbox" class="form-check-input" id="rememberMeCheck" />
+                            <label for="rememberMeCheck" class="form-check-label">Recuérdame</label>
+                        </div>
+                        <button type="submit" class="w-100 btn btn-lg btn-primary rounded-pill shadow-sm mt-3">Iniciar sesión</button>
+                    </form>
+                    <div class="text-center mt-4">
+                        <span class="text-muted">¿No tienes cuenta?</span>
+                        <a asp-page="./Register" class="fw-bold" style="color:#1e3c72;">Regístrate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

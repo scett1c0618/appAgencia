@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Chatbot";
+}
+<h2>Chatbot</h2>
+<form asp-action="EnviarMensaje" method="post">
+    <div class="mb-3">
+        <label for="mensaje" class="form-label">Tu mensaje:</label>
+        <input type="text" class="form-control" id="mensaje" name="mensaje" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+@if (ViewBag.MensajeUsuario != null)
+{
+    <div class="mt-4">
+        <strong>Tú:</strong> @ViewBag.MensajeUsuario
+        <br />
+        <strong>Bot:</strong> @ViewBag.RespuestaBot
+    </div>
+}
