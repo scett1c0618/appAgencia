@@ -123,7 +123,7 @@ namespace app1.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     // Asignar rol por defecto
-                    await _userManager.AddToRoleAsync(user, "Admin");
+                    await _userManager.AddToRoleAsync(user, "Cliente");
 
                     // Confirmar email automáticamente
                     user.EmailConfirmed = true;

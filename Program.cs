@@ -86,10 +86,27 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    // Crear el rol 'Admin' si no existe
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
     // Crear el rol 'Cliente' si no existe
     if (!await roleManager.RoleExistsAsync("Cliente"))
     {
         await roleManager.CreateAsync(new IdentityRole("Cliente"));
+    }
+    // Crear usuario admin por defecto si no existe
+    var adminEmail = "admin@gmail.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+        var result = await userManager.CreateAsync(adminUser, "12345aA!");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
     }
     // Asignar el rol 'Cliente' a todos los usuarios que no tengan rol
     var users = userManager.Users.ToList();
