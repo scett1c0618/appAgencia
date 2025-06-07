@@ -2,47 +2,59 @@
     ViewData["Title"] = "Pago";
     var reservas = ViewBag.Reservas as List<app1.Models.Reserva>;
 }
-<h2>Pago</h2>
-<div class="row">
-    <div class="col-md-8">
-        <form asp-action="Pagar" method="post" id="formPago">
-            <div class="mb-3">
-                <label class="form-label">Número de tarjeta</label>
-                <input type="text" name="NumeroTarjeta" id="NumeroTarjeta" class="form-control" maxlength="19" pattern="[0-9 ]{19}" required autocomplete="off" />
-                <div class="invalid-feedback" id="msgNumTarjeta"></div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg border-0 rounded-4 mb-4">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold mb-4 text-center" style="color:var(--color-primario);">Pago</h2>
+                    <form asp-action="Pagar" method="post" id="formPago">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Número de tarjeta</label>
+                                <input type="text" name="NumeroTarjeta" id="NumeroTarjeta" class="form-control" maxlength="19" pattern="[0-9 ]{19}" required autocomplete="off" />
+                                <div class="invalid-feedback" id="msgNumTarjeta"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre y apellido</label>
+                                <input type="text" name="NombreApellido" class="form-control" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Fecha de vencimiento</label>
+                                <input type="text" name="FechaVencimiento" id="FechaVencimiento" class="form-control" maxlength="5" placeholder="MM/AA" required autocomplete="off" />
+                                <div class="invalid-feedback" id="msgVencimiento"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Código de seguridad (CVV)</label>
+                                <input type="text" name="CVV" class="form-control" maxlength="4" pattern="\d{3,4}" required autocomplete="off" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">DNI</label>
+                                <input type="text" name="DNI" id="DNI" class="form-control" maxlength="8" pattern="\d{8}" required autocomplete="off" />
+                                <div class="invalid-feedback" id="msgDNI"></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success mt-4 w-100 btn-lg" id="btnPagar" disabled>Pagar</button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Nombre y apellido</label>
-                <input type="text" name="NombreApellido" class="form-control" required />
+        </div>
+        <div class="col-lg-4 col-md-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3 text-center">Resumen de compra</h5>
+                    <ul class="list-group mb-3">
+                        @foreach (var r in reservas)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                @r.Viaje?.Titulo <span class="badge bg-primary rounded-pill">@r.Cantidad</span>
+                            </li>
+                        }
+                    </ul>
+                    <div class="mb-3 text-center"><strong>Total: S/ @reservas?.Sum(r => r.Cantidad * (r.Viaje?.Precio ?? 0)).ToString("N2")</strong></div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Fecha de vencimiento</label>
-                <input type="text" name="FechaVencimiento" id="FechaVencimiento" class="form-control" maxlength="5" placeholder="MM/AA" required autocomplete="off" />
-                <div class="invalid-feedback" id="msgVencimiento"></div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Código de seguridad (CVV)</label>
-                <input type="text" name="CVV" class="form-control" maxlength="4" pattern="\d{3,4}" required autocomplete="off" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">DNI</label>
-                <input type="text" name="DNI" id="DNI" class="form-control" maxlength="8" pattern="\d{8}" required autocomplete="off" />
-                <div class="invalid-feedback" id="msgDNI"></div>
-            </div>
-            <button type="submit" class="btn btn-success mt-3 w-100" id="btnPagar" disabled>Pagar</button>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <h5>Resumen de compra</h5>
-        <ul class="list-group mb-3">
-            @foreach (var r in reservas)
-            {
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    @r.Viaje?.Titulo <span>x@r.Cantidad</span>
-                </li>
-            }
-        </ul>
-        <div class="mb-3"><strong>Total: S/ @reservas?.Sum(r => r.Cantidad * (r.Viaje?.Precio ?? 0)).ToString("N2")</strong></div>
+        </div>
     </div>
 </div>
 @section Scripts {

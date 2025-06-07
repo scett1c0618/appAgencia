@@ -31,11 +31,14 @@
                                 <i class="bi bi-globe-americas me-1 text-acento"></i> Catálogo
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Departamento" asp-action="Index">
-                                <i class="bi bi-geo-alt-fill me-1 text-acento"></i> Departamentos
-                            </a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Departamento" asp-action="Index">
+                                    <i class="bi bi-geo-alt-fill me-1 text-acento"></i> Departamentos
+                                </a>
+                            </li>
+                        }
                         @if (!User.IsInRole("Admin"))
                         {
                             <li class="nav-item">

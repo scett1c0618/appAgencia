@@ -2,18 +2,51 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<div class="row mt-4">
-    <div class="col-md-4">
-        <a class="btn btn-primary w-100 mb-2" asp-controller="Viajes" asp-action="Index">Ver Catálogo de Viajes</a>
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-7 mb-4 mb-lg-0">
+            <img src="/img/inicio/inicio.webp" alt="Presentación Perú Travel" class="img-fluid rounded-4 shadow" style="max-height:420px; object-fit:cover; width:100%;">
+        </div>
+        <div class="col-lg-5">
+            <h1 class="display-5 fw-bold mb-3" style="color:#1e3c72;">Perú Travel: Tu Aventura Comienza Aquí</h1>
+            <p class="lead mb-4">En Perú Travel, transformamos tus sueños de viaje en Perú en experiencias inolvidables. Somos una agencia local apasionada por compartir la riqueza cultural, histórica y natural de nuestro país.</p>
+            <ul class="mb-4">
+                <li><b>Experiencias auténticas:</b> Conéctate con la esencia de cada destino.</li>
+                <li><b>Guías expertos:</b> Descubre Perú con el conocimiento y la pasión de nuestros guías locales.</li>
+                <li><b>Viajes personalizados:</b> Diseñamos tu aventura ideal, a tu medida.</li>
+                <li><b>Seguridad y confort:</b> Nos encargamos de todo para que solo te preocupes por disfrutar.</li>
+            </ul>
+            <p class="fw-bold text-success">¡Prepárate para vivir Perú como nunca antes!</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <a class="btn btn-info w-100 mb-2" asp-controller="Clima" asp-action="Index">Ver Clima y Cambios Meteorológicos</a>
+    <!-- Departamentos destacados -->
+    <div class="row mt-5">
+        <h2 class="mb-4 text-center" style="color:#1e3c72;">Regiones Destacadas</h2>
+        @inject app1.Data.ApplicationDbContext db
+        @foreach (var dep in db.Departamentos.ToList())
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0 rounded-4">
+                    @if (!string.IsNullOrEmpty(dep.Imagen))
+                    {
+                        <img src="/img/departamentos/@dep.Imagen" class="card-img-top rounded-top-4" alt="@dep.Nombre" style="height:220px; object-fit:cover;">
+                    }
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">@dep.Nombre</h5>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-    <div class="col-md-4">
-        <a class="btn btn-success w-100 mb-2" asp-controller="Reserva" asp-action="Index">Ver Mis Reservas</a>
+    <div class="row mt-4 mb-5">
+        <div class="col-md-4">
+            <a class="btn btn-primary w-100 mb-2" asp-controller="Viajes" asp-action="Index">Ver Catálogo de Viajes</a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-info w-100 mb-2" asp-controller="Clima" asp-action="Index">Ver Clima y Cambios Meteorológicos</a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-success w-100 mb-2" asp-controller="Reserva" asp-action="Index">Ver Mis Reservas</a>
+        </div>
     </div>
 </div>

@@ -10,21 +10,37 @@
         <div class="col-lg-8 col-md-10">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-body p-5">
-                    <div class="row g-4 align-items-center">
-                        <div class="col-md-5 text-center">
-                            @if (!string.IsNullOrEmpty(Model.Imagen))
-                            {
-                                <img src="~/img/viajes/@Model.Imagen" alt="Imagen de @Model.Titulo" class="img-fluid rounded-4 shadow-sm mb-3" style="max-height:320px; object-fit:cover;">
-                            }
+                    <h2 class="fw-bold mb-3 text-center" style="color:var(--color-primario);">@Model.Titulo</h2>
+                    @if (!string.IsNullOrEmpty(Model.Imagen))
+                    {
+                        <div class="text-center mb-4">
+                            <img src="~/img/viajes/@Model.Imagen" alt="Imagen de @Model.Titulo" class="img-fluid rounded-4 shadow-sm" style="max-height:320px; object-fit:cover;">
                         </div>
-                        <div class="col-md-7">
-                            <h2 class="fw-bold mb-3" style="color:var(--color-primario);">@Model.Titulo</h2>
-                            <p><strong>Descripción:</strong> @Model.Descripcion</p>
-                            <p><strong>Departamento:</strong> <span class="badge bg-acento text-dark">@Model.Departamento?.Nombre</span></p>
-                            <p><strong>Precio:</strong> <span style="color:var(--color-primario);">S/ @string.Format("{0:N2}", Model.Precio)</span></p>
-                            <a asp-action="Index" class="btn btn-secondary mb-3">Volver al catálogo</a>
+                    }
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-12 mb-3">
+                            <div class="card border-primary shadow-sm">
+                                <div class="card-body">
+                                    <p class="mb-0"><strong>Descripción:</strong> @Model.Descripcion</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card border-info shadow-sm">
+                                <div class="card-body">
+                                    <p class="mb-0"><strong>Departamento:</strong> <span class="badge bg-acento text-dark">@Model.Departamento?.Nombre</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card border-success shadow-sm">
+                                <div class="card-body">
+                                    <p class="mb-0"><strong>Precio:</strong> <span style="color:var(--color-primario);">S/ @string.Format("{0:N2}", Model.Precio)</span></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <a asp-action="Index" class="btn btn-secondary mb-3">Volver al catálogo</a>
                     <hr />
                     <!-- Mostrar fechas de salida disponibles -->
                     @if (fechas.Any())
