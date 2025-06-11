@@ -15,6 +15,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "API Agencia de Viajes", Version = "v1" });
+});
+builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services.AddHttpClient<app1.Servicios.ClimaService>();
 builder.Services.AddHttpClient<app1.Servicios.HotelService>();
 builder.Services.AddHttpClient<AmadeusHotelService>(client =>
@@ -58,6 +64,11 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
 app.UseStaticFiles();
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.MapControllerRoute(
     name: "default",
@@ -97,17 +108,17 @@ using (var scope = app.Services.CreateScope())
         await roleManager.CreateAsync(new IdentityRole("Cliente"));
     }
     // Crear usuario admin por defecto si no existe
-    var adminEmail = "admin@gmail.com";
-    var adminUser = await userManager.FindByEmailAsync(adminEmail);
-    if (adminUser == null)
-    {
-        adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
-        var result = await userManager.CreateAsync(adminUser, "12345aA!");
-        if (result.Succeeded)
-        {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
-        }
-    }
+    // var adminEmail = "admin@gmail.com";
+    // var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    // if (adminUser == null)
+    // {
+    //     adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+    //     var result = await userManager.CreateAsync(adminUser, "12345aA!");
+    //     if (result.Succeeded)
+    //     {
+    //         await userManager.AddToRoleAsync(adminUser, "Admin");
+    //     }
+    // }
     // Asignar el rol 'Cliente' a todos los usuarios que no tengan rol
     var users = userManager.Users.ToList();
     foreach (var user in users)

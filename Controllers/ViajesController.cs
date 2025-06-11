@@ -315,5 +315,223 @@ namespace app1.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        /// <summary>
+        /// Devuelve la lista de todos los viajes disponibles.
+        /// </summary>
+        /// <remarks>
+        /// Endpoint público para obtener viajes en formato JSON.
+        /// 
+        /// <b>Ejemplo de respuesta:</b>
+        /// <code>
+        /// [
+        ///   {
+        ///     "id": 10,
+        ///     "titulo": "Cusco Mágico",
+        ///     "descripcion": "Explora Machu Picchu y el Valle Sagrado.",
+        ///     "precio": 1200.00,
+        ///     "departamento": "Cusco",
+        ///     "imagen": "cusco.jpg"
+        ///   }
+        /// ]
+        /// </code>
+        /// </remarks>
+        /// <returns>Lista de viajes.</returns>
+        [HttpGet("api/viajes")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<ViajeDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetViajesApi()
+        {
+            var viajes = await _context.Viajes
+                .Include(v => v.Departamento)
+                .Select(v => new ViajeDto
+                {
+                    Id = v.Id,
+                    Titulo = v.Titulo,
+                    Descripcion = v.Descripcion,
+                    Precio = v.Precio,
+                    Departamento = v.Departamento != null ? v.Departamento.Nombre : null,
+                    Imagen = v.Imagen
+                }).ToListAsync();
+            return Ok(viajes);
+        }
+
+        /// <summary>
+        /// Crea un nuevo viaje (solo para administradores).
+        /// </summary>
+        /// <remarks>
+        /// Requiere multipart/form-data. La imagen es obligatoria. No incluye fechas de salida (se agregan luego).
+        /// <b>Ejemplo de request (form-data):</b>
+        /// <ul>
+        ///   <li>titulo: "Cusco Mágico"</li>
+        ///   <li>descripcion: "Explora Machu Picchu y el Valle Sagrado."</li>
+        ///   <li>precio: 1200.00</li>
+        ///   <li>departamentoId: 1</li>
+        ///   <li>imagen: archivo.jpg</li>
+        /// </ul>
+        /// <b>Ejemplo de respuesta exitosa:</b>
+        /// <code>
+        /// {
+        ///   "id": 10,
+        ///   "titulo": "Cusco Mágico",
+        ///   "descripcion": "Explora Machu Picchu y el Valle Sagrado.",
+        ///   "precio": 1200.00,
+        ///   "departamento": "Cusco",
+        ///   "imagen": "archivo.jpg"
+        /// }
+        /// </code>
+        /// <b>Errores posibles:</b>
+        /// <ul>
+        ///   <li>400: "La imagen es obligatoria."</li>
+        ///   <li>400: "Datos de viaje inválidos."</li>
+        ///   <li>401: "No autenticado o no autorizado."</li>
+        /// </ul>
+        /// </remarks>
+        /// <param name="request">Datos del viaje.</param>
+        /// <returns>Viaje creado.</returns>
+        [HttpPost("api/viajes")]
+        [Authorize(Roles = "Admin")]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(typeof(ViajeDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CrearViajeApi([FromForm] ViajeApiRequest request)
+        {
+            var Imagen = request.Imagen;
+            if (Imagen == null || Imagen.Length == 0)
+                return BadRequest(new { error = "La imagen es obligatoria." });
+            if (string.IsNullOrWhiteSpace(request.Titulo) || string.IsNullOrWhiteSpace(request.Descripcion) || request.Precio <= 0 || request.DepartamentoId <= 0)
+                return BadRequest(new { error = "Datos de viaje inválidos." });
+            // Guardar imagen
+            var carpetaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "viajes");
+            if (!Directory.Exists(carpetaDestino)) Directory.CreateDirectory(carpetaDestino);
+            var nombreArchivo = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(Imagen.FileName);
+            var rutaArchivo = Path.Combine(carpetaDestino, nombreArchivo);
+            using (var stream = new FileStream(rutaArchivo, FileMode.Create))
+            {
+                await Imagen.CopyToAsync(stream);
+            }
+            var viaje = new Viaje
+            {
+                Titulo = request.Titulo,
+                Descripcion = request.Descripcion,
+                Precio = request.Precio,
+                DepartamentoId = request.DepartamentoId,
+                Imagen = nombreArchivo
+            };
+            _context.Viajes.Add(viaje);
+            await _context.SaveChangesAsync();
+            // Proyección a DTO
+            var departamento = await _context.Departamentos.FindAsync(viaje.DepartamentoId);
+            var dto = new ViajeDto
+            {
+                Id = viaje.Id,
+                Titulo = viaje.Titulo,
+                Descripcion = viaje.Descripcion,
+                Precio = viaje.Precio,
+                Departamento = departamento?.Nombre,
+                Imagen = viaje.Imagen
+            };
+            return Created($"/api/viajes/{viaje.Id}", dto);
+        }
+
+        /// <summary>
+        /// Devuelve la lista de todas las fechas de salida de viajes.
+        /// </summary>
+        /// <remarks>
+        /// Endpoint público para obtener fechas de salida en formato JSON.
+        /// 
+        /// <b>Ejemplo de respuesta:</b>
+        /// <code>
+        /// [
+        ///   {
+        ///     "id": 100,
+        ///     "fechaSalida": "2025-07-01T00:00:00Z",
+        ///     "horaSalida": "08:00:00",
+        ///     "asientosDisponibles": 20
+        ///   }
+        /// ]
+        /// </code>
+        /// </remarks>
+        /// <returns>Lista de fechas de salida.</returns>
+        [HttpGet("api/fechas-salida")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(IEnumerable<FechaSalidaViajeDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetFechasSalidaApi()
+        {
+            var fechas = await _context.FechasSalidaViaje
+                .Select(f => new FechaSalidaViajeDto
+                {
+                    Id = f.Id,
+                    FechaSalida = f.FechaSalida,
+                    HoraSalida = f.HoraSalida,
+                    AsientosDisponibles = f.AsientosDisponibles
+                }).ToListAsync();
+            return Ok(fechas);
+        }
+
+        /// <summary>
+        /// Crea una nueva fecha de salida para un viaje (solo para administradores).
+        /// </summary>
+        /// <remarks>
+        /// Requiere autenticación admin. La fecha y hora deben ser futuras y los asientos mayores a 0.
+        /// <b>Ejemplo de request:</b>
+        /// <code>
+        /// {
+        ///   "viajeId": 10,
+        ///   "fechaSalida": "2025-07-01T00:00:00Z",
+        ///   "horaSalida": "08:00:00",
+        ///   "asientosDisponibles": 20
+        /// }
+        /// </code>
+        /// <b>Ejemplo de respuesta exitosa:</b>
+        /// <code>
+        /// {
+        ///   "id": 100,
+        ///   "fechaSalida": "2025-07-01T00:00:00Z",
+        ///   "horaSalida": "08:00:00",
+        ///   "asientosDisponibles": 20
+        /// }
+        /// </code>
+        /// <b>Errores posibles:</b>
+        /// <ul>
+        ///   <li>400: "Datos inválidos."</li>
+        ///   <li>400: "La fecha debe ser futura."</li>
+        ///   <li>400: "Viaje no encontrado."</li>
+        ///   <li>401: "No autenticado o no autorizado."</li>
+        /// </ul>
+        /// </remarks>
+        /// <param name="request">Datos de la fecha de salida.</param>
+        /// <returns>Fecha de salida creada.</returns>
+        [HttpPost("api/fechas-salida")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(FechaSalidaViajeDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CrearFechaSalidaApi([FromBody] FechaSalidaViajeApiRequest request)
+        {
+            if (request == null || request.ViajeId <= 0 || request.AsientosDisponibles < 1)
+                return BadRequest(new { error = "Datos inválidos." });
+            if (request.FechaSalida.Date < DateTime.UtcNow.Date)
+                return BadRequest(new { error = "La fecha debe ser futura." });
+            var viaje = await _context.Viajes.FindAsync(request.ViajeId);
+            if (viaje == null)
+                return BadRequest(new { error = "Viaje no encontrado." });
+            var fecha = new FechaSalidaViaje
+            {
+                ViajeId = request.ViajeId,
+                FechaSalida = request.FechaSalida.Date,
+                HoraSalida = request.HoraSalida,
+                AsientosDisponibles = request.AsientosDisponibles
+            };
+            _context.FechasSalidaViaje.Add(fecha);
+            await _context.SaveChangesAsync();
+            var dto = new FechaSalidaViajeDto
+            {
+                Id = fecha.Id,
+                FechaSalida = fecha.FechaSalida,
+                HoraSalida = fecha.HoraSalida,
+                AsientosDisponibles = fecha.AsientosDisponibles
+            };
+            return Created($"/api/fechas-salida/{fecha.Id}", dto);
+        }
     }
 }
