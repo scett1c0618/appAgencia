@@ -20,7 +20,12 @@ namespace app1.Servicios
                 {
                     if (!_initialized)
                     {
-                        var dataPath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "mensaje-categoria-data.tsv");
+                        // Buscar archivo en output y fallback a ruta de desarrollo
+                        var dataPath = Path.Combine(AppContext.BaseDirectory, "Data", "mensaje-categoria-data.tsv");
+                        if (!File.Exists(dataPath))
+                        {
+                            dataPath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "mensaje-categoria-data.tsv");
+                        }
                         var mlContext = new MLContext();
                         var data = mlContext.Data.LoadFromTextFile<MensajeCategoriaData>(dataPath, hasHeader: true, separatorChar: '\t');
                         var pipeline = mlContext.Transforms.Conversion.MapValueToKey("Label", nameof(MensajeCategoriaData.Categoria))
