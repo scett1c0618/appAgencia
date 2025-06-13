@@ -16,13 +16,15 @@ namespace app1.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly SentimentService _sentimentService;
+        private readonly ClasificacionMensajeService _clasificacionService;
 
-        public ContactoController(ILogger<ContactoController> logger, UserManager<IdentityUser> userManager, ApplicationDbContext context, SentimentService sentimentService)
+        public ContactoController(ILogger<ContactoController> logger, UserManager<IdentityUser> userManager, ApplicationDbContext context, SentimentService sentimentService, ClasificacionMensajeService clasificacionService)
         {
             _logger = logger;
             _userManager = userManager;
             _context = context;
             _sentimentService = sentimentService;
+            _clasificacionService = clasificacionService;
         }
 
         [HttpGet]
@@ -59,16 +61,14 @@ namespace app1.Controllers
                         await _userManager.UpdateAsync(user);
                     }
                 }
-                // Analizar sentimiento usando Hugging Face
+                // Clasificar mensaje automáticamente
                 if (!string.IsNullOrWhiteSpace(contacto.Mensaje))
                 {
-                    var (etiqueta, puntuacion) = await _sentimentService.AnalizarSentimientoAsync(contacto.Mensaje);
-                    contacto.Etiqueta = etiqueta;
-                    contacto.Puntuacion = (float)puntuacion;
+                    contacto.Etiqueta = _clasificacionService.Clasificar(contacto.Mensaje);
                 }
                 _context.Contacto.Add(contacto);
                 await _context.SaveChangesAsync();
-                TempData["Resultado"] = "Mensaje enviado correctamente." + (contacto.Etiqueta != null ? $" El comentario es {contacto.Etiqueta} ({contacto.Puntuacion:N2})" : "");
+                TempData["Resultado"] = "Mensaje enviado correctamente." + (contacto.Etiqueta != null ? $" El mensaje fue clasificado como: {contacto.Etiqueta}" : "");
                 return RedirectToAction("Index");
             }
             return View("Index", contacto);
@@ -82,6 +82,7 @@ namespace app1.Controllers
                 .Where(c => c.ViajeId == null)
                 .OrderByDescending(c => c.FechaEnvio)
                 .ToList();
+            // Mostrar la etiqueta de clasificación automática
             return View("AdminMensajes", mensajes);
         }
 

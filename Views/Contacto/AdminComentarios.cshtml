@@ -4,7 +4,7 @@
 }
 <h2 class="mb-4">Comentarios de Viajes</h2>
 <table class="table table-striped table-bordered">
-    <thead>
+    <thead class="table-dark">
         <tr>
             <th>Fecha</th>
             <th>Mensaje</th>
@@ -20,7 +20,22 @@
                 <td>@c.FechaEnvio.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                 <td>@c.Mensaje</td>
                 <td>@c.Viaje?.Titulo</td>
-                <td>@c.Etiqueta</td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(c.Etiqueta))
+                    {
+                        string color = c.Etiqueta switch
+                        {
+                            "Positivo" => "success",
+                            "Negativo" => "danger",
+                            _ => "secondary"
+                        };
+                        <span class="badge bg-@color">@c.Etiqueta</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Sin clasificar</span>
+                    }
+                </td>
                 <td>@c.Puntuacion.ToString("N2")</td>
             </tr>
         }

@@ -44,6 +44,7 @@ builder.Services.AddSession(options =>
 
 // Registrar SentimentService como singleton (sin argumentos)
 builder.Services.AddSingleton<SentimentService>();
+builder.Services.AddSingleton<ClasificacionMensajeService>();
 
 var app = builder.Build();
 
@@ -75,21 +76,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
-
-// Configurar variable de entorno para Google Cloud Natural Language
-var googleCreds = builder.Configuration["GoogleCloud:CredentialsPath"];
-var googleCredsJson = builder.Configuration["GoogleCloud:CredentialsJson"];
-if (!string.IsNullOrEmpty(googleCredsJson))
-{
-    // Si la variable contiene el contenido del JSON, escribirlo a un archivo temporal
-    var tempPath = Path.Combine(Path.GetTempPath(), $"google-creds-{Guid.NewGuid()}.json");
-    File.WriteAllText(tempPath, googleCredsJson);
-    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", tempPath);
-}
-else if (!string.IsNullOrEmpty(googleCreds))
-{
-    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", googleCreds);
-}
 
 using (var scope = app.Services.CreateScope())
 {

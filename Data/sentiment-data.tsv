@@ -1,0 +1,669 @@
+Label	Text
+true	Este producto es excelente, me encantó su calidad.
+true	La atención fue rápida y el producto cumplió mis expectativas.
+false	No recomiendo este producto, llegó roto.
+false	Tardó mucho en llegar y no funciona.
+true	El viaje fue increíble, el mejor de mi vida.
+true	El hotel superó todas nuestras expectativas, ¡impresionante!
+true	Servicio al cliente excepcional, resolvieron todo rápidamente.
+true	Vuelo a tiempo y asientos muy cómodos.
+true	La excursión guiada fue fascinante, aprendimos mucho.
+true	Paquete de viaje perfecto para lo que buscábamos.
+true	La comida en el resort era deliciosa y variada.
+true	Recomiendo totalmente esta agencia de viajes.
+true	Experiencia de crucero inolvidable, todo impecable.
+true	Las vistas desde la habitación eran espectaculares.
+true	El personal del hotel siempre muy atento y amable.
+true	Reservar fue muy sencillo gracias a su plataforma.
+true	Puntualidad en los traslados, muy eficientes.
+true	Un destino mágico, no me quería volver.
+true	La organización del tour fue impecable.
+true	Me encantó la atención personalizada que recibí.
+true	Precios muy competitivos y gran calidad.
+true	Volvería a viajar con ellos sin dudarlo.
+true	Las instalaciones del hotel eran de lujo.
+true	La guía turística era muy conocedora y divertida.
+true	Sin problemas en la aduana gracias a la ayuda.
+true	Unas vacaciones de ensueño, todo salió a la perfección.
+true	El check-in fue rápido y sin complicaciones.
+true	La piscina del hotel era un oasis, muy relajante.
+true	El vuelo fue tranquilo y el entretenimiento excelente.
+true	Los agentes de viajes fueron muy profesionales.
+true	Disfruté cada momento de mi estadía.
+true	Altamente satisfecho con mi compra de boletos.
+true	La conectividad Wi-Fi en el hotel era muy buena.
+true	Ambiente muy agradable en el destino.
+true	La gestión de mi reserva fue muy eficiente.
+true	Maravillosa experiencia, todo a la altura.
+true	Servicio de habitaciones impecable y rápido.
+true	Un viaje que superó todas mis expectativas.
+true	Las actividades ofrecidas eran muy variadas.
+true	Me sentí muy seguro durante todo el viaje.
+true	La ubicación del hotel era ideal, cerca de todo.
+true	El desayuno incluido era fabuloso.
+true	Personal de tierra muy colaborador.
+true	Un verdadero placer viajar con ustedes.
+true	La higiene del lugar era impecable.
+true	El proceso de devolución fue ágil y sencillo.
+true	Gran atención al detalle en cada servicio.
+true	El paisaje era simplemente hermoso.
+true	Toda la documentación llegó a tiempo.
+true	Unas vacaciones rejuvenecedoras.
+true	El vuelo chárter fue muy cómodo y eficiente.
+true	Excelente relación calidad-precio en el hotel.
+true	Nuestra habitación era muy espaciosa y limpia.
+true	La disponibilidad de tours era amplia y variada.
+true	El sistema de recompensas para viajeros es muy bueno.
+true	Unos días de desconexión increíbles.
+true	El concierge del hotel nos ayudó muchísimo.
+true	Experiencia cultural enriquecedora.
+true	La aplicación móvil de la agencia es muy útil.
+true	Me sentí muy bien atendido en todo momento.
+true	Un viaje que recordaré para siempre.
+true	La conectividad de los vuelos fue perfecta.
+true	El buffet del desayuno era una maravilla.
+true	La flexibilidad en los cambios de reserva fue un plus.
+true	La calidad de los coches de alquiler era excelente.
+true	Un lugar hermoso para escapar de la rutina.
+true	Los precios de los souvenirs eran razonables.
+true	Me sorprendió gratamente la organización.
+true	Todo el personal fue muy amable y sonriente.
+true	Las indicaciones para llegar fueron muy claras.
+true	El centro de bienestar del hotel era fantástico.
+true	La seguridad en el aeropuerto fue eficiente.
+true	El programa de fidelidad de la aerolínea es muy bueno.
+true	Un viaje relajante y lleno de aventuras.
+true	La política de equipaje era clara y justa.
+true	Los mapas turísticos que nos dieron fueron de gran ayuda.
+true	Me sentí como en casa, muy acogedor.
+true	Unas vacaciones que valieron cada centavo.
+true	El transporte público desde el hotel era accesible.
+true	La calidad de las fotografías tomadas en el tour es excelente.
+true	Los espectáculos nocturnos del crucero eran geniales.
+true	La piscina climatizada fue un acierto.
+true	Me encantó la opción de check-out tardío.
+true	La amabilidad del personal en el recepción.
+true	La rapidez en la entrega de maletas.
+true	Disfruté mucho del sol y la playa.
+true	El guía hablaba varios idiomas.
+true	El wifi gratis fue un salvavidas.
+true	Una experiencia de primera clase.
+true	Volvería a ese destino sin pensarlo.
+true	La limpieza en general era excelente.
+true	El servicio de taxi recomendado fue fiable.
+true	Las almohadas eran muy cómodas.
+true	El café de la mañana era delicioso.
+true	Sin duda mi mejor viaje.
+true	Todo funcionó a la perfección.
+true	Una gran aventura.
+false	El vuelo se retrasó horas y perdí mi conexión.
+false	El hotel era ruidoso y las habitaciones estaban sucias.
+false	La agencia no me informó de los cargos adicionales.
+false	El tour fue aburrido y el guía no sabía nada.
+false	Nunca más viajaré con esta compañía, el servicio fue pésimo.
+false	La comida en el resort era horrible y me enfermé.
+false	Mi equipaje se perdió y la aerolínea no hizo nada.
+false	El proceso de reserva fue confuso y la web se caía.
+false	Las fotos del hotel eran engañosas, no se parecía.
+false	La asistencia en carretera fue inexistente cuando la necesité.
+false	El aire acondicionado no funcionaba en la habitación.
+false	La excursión prometida no se realizó por falta de gente.
+false	Pésima atención telefónica, estuve horas esperando.
+false	El traslado desde el aeropuerto tardó una eternidad.
+false	El vuelo hizo una escala innecesaria muy larga.
+false	La habitación olía a humedad, insoportable.
+false	Me cobraron de más por un servicio que no usé.
+false	El guía llegó tarde y la explicación era pobre.
+false	La aerolínea perdió mi reserva, un desastre.
+false	El internet del hotel era lentísimo o no funcionaba.
+false	Falta de información clara sobre el itinerario.
+false	El desayuno era muy escaso y de mala calidad.
+false	La piscina estaba sucia y con mucha gente.
+false	El colchón de la cama era horrible, no pude dormir.
+false	Ruido de las habitaciones contiguas, no hay insonorización.
+false	No había agua caliente en la ducha.
+false	El check-out fue muy lento y desorganizado.
+false	El personal de recepción era muy poco amable.
+false	Me cambiaron el horario del vuelo sin previo aviso.
+false	La comida del avión era incomible.
+false	Los baños del aeropuerto estaban muy sucios.
+false	La agencia no respondió a mis correos.
+false	La ubicación del hotel era peligrosa.
+false	Los precios de las actividades eran excesivos.
+false	Cancelaron el tour a última hora sin explicación.
+false	El servicio de alquiler de coches fue un fraude.
+false	Me sentí estafado con el paquete de viaje.
+false	El ruido de las obras cercanas era insoportable.
+false	La limpieza de la habitación era deficiente.
+false	Me perdí por falta de indicaciones claras.
+false	Las sábanas estaban manchadas, asqueroso.
+false	La seguridad del hotel era cuestionable.
+false	Los ascensores del hotel estaban averiados.
+false	No había opciones vegetarianas en el menú.
+false	El autobús del tour estaba en muy mal estado.
+false	La duración del tour fue muy corta para el precio.
+false	No respetaron mi asiento asignado en el vuelo.
+false	La pantalla de entretenimiento no funcionaba.
+false	El sistema de reservas colapsó varias veces.
+false	Me prometieron algo y no lo cumplieron.
+false	El personal del aeropuerto fue muy grosero.
+false	La playa cerca del hotel estaba muy sucia.
+false	El hotel estaba en obras, mucho polvo y ruido.
+false	Las excursiones opcionales eran muy caras.
+false	No había estacionamiento disponible en el hotel.
+false	La señalización dentro del hotel era confusa.
+false	Me enfermé por el agua del grifo del hotel.
+false	El servicio de lavandería perdió mi ropa.
+false	La espera para el equipaje fue interminable.
+false	El tour prometía más de lo que ofrecía.
+false	Los precios de los mini-bar eran exorbitantes.
+false	No había toallas suficientes en la piscina.
+false	La recepción no me ayudó con mi problema.
+false	El transporte público era inexistente en la zona.
+false	Demasiados niños ruidosos en el hotel.
+false	Las ventanas no cerraban bien, entraba ruido.
+false	El gimnasio del hotel era muy pequeño.
+false	No pude cambiar mis fechas, inflexibles.
+false	El aire acondicionado hacía mucho ruido.
+false	La vista de la habitación daba a un muro.
+false	Me sentí ignorado por el personal.
+false	La cola para el check-in era enorme.
+false	El vuelo fue muy turbulento.
+false	La música del bar era demasiado alta.
+false	Los precios de los souvenirs eran inflados.
+false	El tour se canceló sin alternativas.
+false	La calidad de las toallas era pésima.
+false	El servicio de taxi me cobró de más.
+false	Las almohadas eran muy duras.
+false	El café de la mañana sabía a quemado.
+false	Mi peor experiencia de viaje.
+false	Nada funcionó como debía.
+false	Una gran decepción.
+false	El colchón estaba viejo y deforme.
+false	Poca variedad en el desayuno.
+false	Las indicaciones eran confusas.
+false	La habitación estaba llena de mosquitos.
+false	El transporte era poco fiable.
+false	Los tours eran muy caros.
+false	Problemas con la facturación.
+false	El control de seguridad fue lento.
+false	La comida era repetitiva.
+false	El ruido de la calle era molesto.
+false	No había servicio de internet.
+false	El hotel estaba alejado.
+false	La excursión fue decepcionante.
+false	El mapa estaba desactualizado.
+false	El guía era maleducado.
+false	Poca ventilación.
+false	No me gustó.
+true	Este producto es excelente, me encantó su calidad
+true	La atención fue rápida y el producto cumplió mis expectativas
+false	No recomiendo este producto, llegó roto
+false	Tardó mucho en llegar y no funciona
+true	El viaje fue increíble, el mejor de mi vida.
+true	El hotel superó todas nuestras expectativas, ¡impresionante!
+true	Servicio al cliente excepcional, resolvieron todo rápidamente.
+true	Vuelo a tiempo y asientos muy cómodos.
+true	La excursión guiada fue fascinante, aprendimos mucho.
+true	Paquete de viaje perfecto para lo que buscábamos.
+true	La comida en el resort era deliciosa y variada.
+true	Recomiendo totalmente esta agencia de viajes.
+true	Experiencia de crucero inolvidable, todo impecable.
+true	Las vistas desde la habitación eran espectaculares.
+true	El personal del hotel siempre muy atento y amable.
+true	Reservar fue muy sencillo gracias a su plataforma.
+true	Puntualidad en los traslados, muy eficientes.
+true	Un destino mágico, no me quería volver.
+true	La organización del tour fue impecable.
+true	Me encantó la atención personalizada que recibí.
+true	Precios muy competitivos y gran calidad.
+true	Volvería a viajar con ellos sin dudarlo.
+true	Las instalaciones del hotel eran de lujo.
+true	La guía turística era muy conocedora y divertida.
+true	Sin problemas en la aduana gracias a la ayuda.
+true	Unas vacaciones de ensueño, todo salió a la perfección.
+true	El check-in fue rápido y sin complicaciones.
+true	La piscina del hotel era un oasis, muy relajante.
+true	El vuelo fue tranquilo y el entretenimiento excelente.
+true	Los agentes de viajes fueron muy profesionales.
+true	Disfruté cada momento de mi estadía.
+true	Altamente satisfecho con mi compra de boletos.
+true	La conectividad Wi-Fi en el hotel era muy buena.
+true	Ambiente muy agradable en el destino.
+true	La gestión de mi reserva fue muy eficiente.
+true	Maravillosa experiencia, todo a la altura.
+true	Servicio de habitaciones impecable y rápido.
+true	Un viaje que superó todas mis expectativas.
+true	Las actividades ofrecidas eran muy variadas.
+true	Me sentí muy seguro durante todo el viaje.
+true	La ubicación del hotel era ideal, cerca de todo.
+true	El desayuno incluido era fabuloso.
+true	Personal de tierra muy colaborador.
+true	Un verdadero placer viajar con ustedes.
+true	La higiene del lugar era impecable.
+true	El proceso de devolución fue ágil y sencillo.
+true	Gran atención al detalle en cada servicio.
+true	El paisaje era simplemente hermoso.
+true	Toda la documentación llegó a tiempo.
+true	Unas vacaciones rejuvenecedoras.
+true	El vuelo chárter fue muy cómodo y eficiente.
+true	Excelente relación calidad-precio en el hotel.
+true	Nuestra habitación era muy espaciosa y limpia.
+true	La disponibilidad de tours era amplia y variada.
+true	El sistema de recompensas para viajeros es muy bueno.
+true	Unos días de desconexión increíbles.
+true	El concierge del hotel nos ayudó muchísimo.
+true	Experiencia cultural enriquecedora.
+true	La aplicación móvil de la agencia es muy útil.
+true	Me sentí muy bien atendido en todo momento.
+true	Un viaje que recordaré para siempre.
+true	La conectividad de los vuelos fue perfecta.
+true	El buffet del desayuno era una maravilla.
+true	La flexibilidad en los cambios de reserva fue un plus.
+true	La calidad de los coches de alquiler era excelente.
+true	Un lugar hermoso para escapar de la rutina.
+true	Los precios de los souvenirs eran razonables.
+true	Me sorprendió gratamente la organización.
+true	Todo el personal fue muy amable y sonriente.
+true	Las indicaciones para llegar fueron muy claras.
+true	El centro de bienestar del hotel era fantástico.
+true	La seguridad en el aeropuerto fue eficiente.
+true	El programa de fidelidad de la aerolínea es muy bueno.
+true	Un viaje relajante y lleno de aventuras.
+true	La política de equipaje era clara y justa.
+true	Los mapas turísticos que nos dieron fueron de gran ayuda.
+true	Me sentí como en casa, muy acogedor.
+true	Unas vacaciones que valieron cada centavo.
+true	El transporte público desde el hotel era accesible.
+true	La calidad de las fotografías tomadas en el tour es excelente.
+true	Los espectáculos nocturnos del crucero eran geniales.
+true	La piscina climatizada fue un acierto.
+true	Me encantó la opción de check-out tardío.
+true	La amabilidad del personal en la recepción.
+true	La rapidez en la entrega de maletas.
+true	Disfruté mucho del sol y la playa.
+true	El guía hablaba varios idiomas.
+true	El wifi gratis fue un salvavidas.
+true	Una experiencia de primera clase.
+true	Volvería a ese destino sin pensarlo.
+true	La limpieza en general era excelente.
+true	El servicio de taxi recomendado fue fiable.
+true	Las almohadas eran muy cómodas.
+true	El café de la mañana era delicioso.
+true	Sin duda mi mejor viaje.
+true	Todo funcionó a la perfección.
+true	Una gran aventura.
+false	El vuelo se retrasó horas y perdí mi conexión.
+false	El hotel era ruidoso y las habitaciones estaban sucias.
+false	La agencia no me informó de los cargos adicionales.
+false	El tour fue aburrido y el guía no sabía nada.
+false	Nunca más viajaré con esta compañía, el servicio fue pésimo.
+false	La comida en el resort era horrible y me enfermé.
+false	Mi equipaje se perdió y la aerolínea no hizo nada.
+false	El proceso de reserva fue confuso y la web se caía.
+false	Las fotos del hotel eran engañosas, no se parecía.
+false	La asistencia en carretera fue inexistente cuando la necesité.
+false	El aire acondicionado no funcionaba en la habitación.
+false	La excursión prometida no se realizó por falta de gente.
+false	Pésima atención telefónica, estuve horas esperando.
+false	El traslado desde el aeropuerto tardó una eternidad.
+false	El vuelo hizo una escala innecesaria muy larga.
+false	La habitación olía a humedad, insoportable.
+false	Me cobraron de más por un servicio que no usé.
+false	El guía llegó tarde y la explicación era pobre.
+false	La aerolínea perdió mi reserva, un desastre.
+false	El internet del hotel era lentísimo o no funcionaba.
+false	Falta de información clara sobre el itinerario.
+false	El desayuno era muy escaso y de mala calidad.
+false	La piscina estaba sucia y con mucha gente.
+false	El colchón de la cama era horrible, no pude dormir.
+false	Ruido de las habitaciones contiguas, no hay insonorización.
+false	No había agua caliente en la ducha.
+false	El check-out fue muy lento y desorganizado.
+false	El personal de recepción era muy poco amable.
+false	Me cambiaron el horario del vuelo sin previo aviso.
+false	La comida del avión era incomible.
+false	Los baños del aeropuerto estaban muy sucios.
+false	La agencia no respondió a mis correos.
+false	La ubicación del hotel era peligrosa.
+false	Los precios de las actividades eran excesivos.
+false	Cancelaron el tour a última hora sin explicación.
+false	El servicio de alquiler de coches fue un fraude.
+false	Me sentí estafado con el paquete de viaje.
+false	El ruido de las obras cercanas era insoportable.
+false	La limpieza de la habitación era deficiente.
+false	Me perdí por falta de indicaciones claras.
+false	Las sábanas estaban manchadas, asqueroso.
+false	La seguridad del hotel era cuestionable.
+false	Los ascensores del hotel estaban averiados.
+false	No había opciones vegetarianas en el menú.
+false	El autobús del tour estaba en muy mal estado.
+false	La duración del tour fue muy corta para el precio.
+false	No respetaron mi asiento asignado en el vuelo.
+false	La pantalla de entretenimiento no funcionaba.
+false	El sistema de reservas colapsó varias veces.
+false	Me prometieron algo y no lo cumplieron.
+false	El personal del aeropuerto fue muy grosero.
+false	La playa cerca del hotel estaba muy sucia.
+false	El hotel estaba en obras, mucho polvo y ruido.
+false	Las excursiones opcionales eran muy caras.
+false	No había estacionamiento disponible en el hotel.
+false	La señalización dentro del hotel era confusa.
+false	Me enfermé por el agua del grifo del hotel.
+false	El servicio de lavandería perdió mi ropa.
+false	La espera para el equipaje fue interminable.
+false	El tour prometía más de lo que ofrecía.
+false	Los precios de los mini-bar eran exorbitantes.
+false	No había toallas suficientes en la piscina.
+false	La recepción no me ayudó con mi problema.
+false	El transporte público era inexistente en la zona.
+false	Demasiados niños ruidosos en el hotel.
+false	Las ventanas no cerraban bien, entraba ruido.
+false	El gimnasio del hotel era muy pequeño.
+false	No pude cambiar mis fechas, inflexibles.
+false	El aire acondicionado hacía mucho ruido.
+false	La vista de la habitación daba a un muro.
+false	Me sentí ignorado por el personal.
+false	La cola para el check-in era enorme.
+false	El vuelo fue muy turbulento.
+false	La música del bar era demasiado alta.
+false	Los precios de los souvenirs eran inflados.
+false	El tour se canceló sin alternativas.
+false	La calidad de las toallas era pésima.
+false	El servicio de taxi me cobró de más.
+false	Las almohadas eran muy duras.
+false	El café de la mañana sabía a quemado.
+false	Mi peor experiencia de viaje.
+false	Nada funcionó como debía.
+false	Una gran decepción.
+false	El colchón estaba viejo y deforme.
+false	Poca variedad en el desayuno.
+false	Las indicaciones eran confusas.
+false	La habitación estaba llena de mosquitos.
+false	El transporte era poco fiable.
+false	Los tours eran muy caros.
+false	Problemas con la facturación.
+false	El control de seguridad fue lento.
+false	La comida era repetitiva.
+false	El ruido de la calle era molesto.
+false	No había servicio de internet.
+false	El hotel estaba alejado.
+false	La excursión fue decepcionante.
+false	El mapa estaba desactualizado.
+false	El guía era maleducado.
+false	Poca ventilación.
+false	No me gustó.
+true	La reserva de última hora fue sorprendentemente fácil.
+true	El personal del aeropuerto fue increíblemente útil.
+true	Mi experiencia con el crucero fue de lujo puro.
+true	Las ofertas de paquete fueron muy atractivas.
+true	La aplicación de la agencia es muy intuitiva y práctica.
+true	Un hotel con encanto y un servicio impecable.
+true	El viaje de negocios fue un éxito, todo fluyó.
+true	El guía local nos mostró lugares secretos.
+true	La relación calidad-precio de los vuelos era excelente.
+true	Una escapada perfecta para desconectar.
+true	El spa del hotel era un paraíso de relajación.
+true	La flexibilidad para cambiar fechas fue un gran alivio.
+true	Las recomendaciones de restaurantes fueron un acierto.
+true	El wifi gratuito y de alta velocidad fue un plus.
+true	La organización de la boda de destino fue impecable.
+true	Un destino que te llena de energía.
+true	El servicio de equipaje fue muy eficiente.
+true	La comodidad de los asientos en el tren era sobresaliente.
+true	Los tours en bicicleta fueron muy divertidos.
+true	Me sorprendió la facilidad del proceso de visado.
+true	El desayuno buffet tenía una variedad increíble.
+true	Todo el personal era muy simpático y atento.
+true	Un viaje que superó mis expectativas más salvajes.
+true	La calidad de la comida en el tour gastronómico.
+true	Los paisajes de montaña eran impresionantes.
+true	La plataforma de reservas es muy amigable.
+true	El paquete de luna de miel fue absolutamente romántico.
+true	La piscina infinity ofrecía vistas espectaculares.
+true	El programa de viajeros frecuentes es muy generoso.
+true	La música en vivo en el lobby era muy agradable.
+true	La puntualidad de los trenes fue ejemplar.
+true	Las camas eran muy cómodas y limpias.
+true	El servicio de transporte privado fue muy eficiente.
+true	Unas vacaciones llenas de momentos inolvidables.
+true	Los shows nocturnos en el hotel eran entretenidos.
+true	El tour de avistamiento de aves fue fascinante.
+true	El centro de convenciones era muy funcional.
+true	La amabilidad del personal en el restaurante.
+true	Las opciones de excursiones de un día eran variadas.
+true	El servicio de lavandería fue rápido y eficiente.
+true	La política de cancelación fue justa.
+true	El ambiente en la ciudad era vibrante.
+true	La disponibilidad de taxis era constante.
+true	La calidad de las bebidas en el todo incluido.
+true	Las indicaciones para llegar fueron claras.
+true	La terraza de la habitación era un lujo.
+true	Los souvenirs eran únicos y de buen gusto.
+true	Un destino con mucha historia.
+true	La atención en el club infantil fue excelente.
+true	Me sentí muy seguro en la zona turística.
+true	Los descuentos por reserva anticipada eran buenos.
+true	El personal de limpieza era muy discreto.
+true	El viaje fue corto pero muy intenso.
+true	Las instalaciones deportivas eran muy completas.
+true	La vista al mar desde el balcón era de ensueño.
+true	El concierge nos consiguió las mejores entradas.
+true	El desayuno en la habitación fue un detalle.
+true	La agencia se encargó de todo, sin preocupaciones.
+true	Un destino para repetir muchas veces.
+true	El servicio de masajes en el spa fue revitalizante.
+true	El hotel tenía un ambiente muy tranquilo.
+true	La rapidez del check-in online.
+true	La comida del buffet era variada.
+true	El personal del bar era muy atento.
+true	El viaje fue perfecto.
+true	Sin quejas.
+true	Muy contento.
+true	Excelente.
+true	Lo mejor.
+true	Magnífico.
+true	Increíble.
+true	Genial.
+true	Fantástico.
+true	Recomendado.
+true	Feliz.
+true	Contentísimo.
+true	Buenísimo.
+true	Súper.
+true	Bien.
+true	Ok.
+true	Perfecto.
+true	Agradable.
+true	Cómodo.
+true	Eficiente.
+false	El autobús del tour se averió a mitad de camino.
+false	La habitación estaba infestada de insectos, horrible.
+false	La agencia cambió el itinerario sin avisar, un caos.
+false	El personal del hotel fue grosero y poco servicial.
+false	El precio del paquete no incluía impuestos ocultos.
+false	El vuelo tuvo una parada no anunciada, un engaño.
+false	La comida del crucero era insípida y fría.
+false	Mi reserva fue cancelada sin motivo, un desastre.
+false	El servicio de internet del hotel era intermitente.
+false	Las fotos del destino no eran realistas.
+false	El transporte público en la zona era inexistente.
+false	Me enfermé por la comida del hotel.
+false	La piscina estaba en mantenimiento y no pude usarla.
+false	El ruido de la construcción era constante y molesto.
+false	No había suficientes toallas en la habitación.
+false	El aire acondicionado goteaba toda la noche.
+false	El check-in tardó una eternidad.
+false	El personal del bar era muy lento.
+false	La ubicación del hotel era muy remota.
+false	Las excursiones eran demasiado caras y cortas.
+false	El desayuno era repetitivo y aburrido.
+false	La limpieza de la habitación era superficial.
+false	Me sentí inseguro en los alrededores del hotel.
+false	Los ascensores estaban viejos y daban miedo.
+false	No había opciones para personas con alergias.
+false	El servicio de habitaciones era muy lento.
+false	La aerolínea perdió mi equipaje de mano.
+false	El personal de seguridad fue muy estricto.
+false	El tour estaba masificado, no se veía nada.
+false	El colchón de la cama era duro como una piedra.
+false	La música del hotel era demasiado ruidosa.
+false	Me cobraron extra por el agua embotellada.
+false	La vista desde la habitación era de un callejón.
+false	No pude dormir por el ruido de la calle.
+false	El gimnasio del hotel estaba desatendido.
+false	La pantalla de televisión no funcionaba bien.
+false	El servicio de taxi me estafó con la tarifa.
+false	La agencia no respondió a mis quejas.
+false	Las indicaciones eran confusas y me perdí.
+false	El check-out fue caótico y desordenado.
+false	La comida del aeropuerto era muy cara.
+false	El aire de la habitación olía a cerrado.
+false	No había suficiente presión de agua en la ducha.
+false	El personal del hotel era indiferente.
+false	El servicio de transporte era irregular.
+false	Las instalaciones del hotel eran anticuadas.
+false	El wifi solo funcionaba en el lobby.
+false	Me sentí desatendido por la agencia.
+false	Los baños del hotel estaban sucios.
+false	La espera en la fila fue interminable.
+false	La excursión no valía lo que costaba.
+false	No había donde sentarse en el lobby.
+false	Las almohadas eran muy incómodas.
+false	El café del desayuno era imbebible.
+false	Un viaje desastroso.
+false	Nada salió bien.
+false	Horrible.
+false	Fatal.
+false	Decepcionante.
+false	Malo.
+false	Pésimo.
+false	Terrible.
+false	Insatisfactorio.
+false	No recomendable.
+false	Enojado.
+false	Frustrado.
+false	Asqueroso.
+false	Incómodo.
+false	Lento.
+false	Caro.
+false	Feo.
+false	Ruidoso.
+false	Sucio.
+false	Tarde.
+true	Muy buena experiencia, volvería a comprar
+false	Es un engaño, no coincide con la descripción
+true	Funciona perfectamente, justo lo que necesitaba
+false	Mal servicio al cliente y mala calidad
+true	La mejor compra que he hecho este año
+false	Nunca más compraré aquí
+true	Me encantó el empaque, muy bien cuidado
+false	No vino con los accesorios que decía
+true	Entrega puntual y buen trato del repartidor
+false	Me llegó con una semana de retraso
+true	Excelente atención por parte del vendedor
+false	Todo mal, desde la compra hasta la entrega
+true	Producto tal como se describe, muy satisfecho
+false	Mala experiencia, el producto estaba sucio
+true	Muy amables al resolver mi duda por chat
+false	La caja venía aplastada y el producto roto
+true	Todo perfecto, volveré a comprar sin dudar
+false	No funcionó desde el primer día
+true	Buena relación calidad-precio
+false	Prometieron una cosa y entregaron otra
+true	Increíble servicio, me sorprendieron
+false	No responden mensajes ni llamadas
+true	El producto llegó incluso antes de lo previsto
+false	Pagué por envío rápido y llegó tarde
+true	Se nota la buena calidad en cada detalle
+false	No vale lo que cuesta, muy decepcionado
+false	El material del producto se siente barato y de mala calidad
+true	Volvería a comprar sin dudarlo, la calidad-precio es insuperable
+true	La instalación fue sencilla y el producto funciona sin problemas
+false	Horrible experiencia, nunca recibí mi pedido
+false	El producto se rompió a la semana de usarlo, muy mala fabricación
+true	Me encantó el empaque, muy bien protegido y con un toque personal
+true	Respuesta rápida y eficaz por parte del servicio de atención
+false	Nunca más confiaré en esta marca, su calidad ha decaído mucho
+false	La descripción del producto era engañosa, no coincide con la realidad
+true	Excelente relación calidad-precio, estoy gratamente sorprendido
+true	El seguimiento de mi pedido fue muy preciso, siempre supe dónde estaba
+false	La entrega se demoró una eternidad, llegó mucho después de lo esperado
+false	Me siento frustrado, el producto es defectuoso
+true	Superó mis expectativas, el producto es robusto y bien diseñado
+true	El equipo de atención al cliente fue muy empático y comprensivo
+false	No hay forma de contactar al servicio de atención al cliente, un desastre
+false	El producto llegó incompleto, faltaban piezas esenciales
+true	Estoy fascinado, es exactamente lo que necesitaba para mi trabajo
+true	El proceso de pago fue seguro y rápido
+true	Un regalo ideal, le encantó a mi pareja
+false	Servicio de atención al cliente deficiente
+true	Me ayudaron en todo momento, excelente
+false	Viene con errores de fábrica
+true	El color y el tamaño eran justos lo que buscaba
+false	No cumple lo que promete
+true	Volvería a comprar sin pensarlo
+false	Muy baja calidad, parece usado
+true	Todo llegó en perfecto estado, gracias
+false	No recomendaría este producto a nadie
+true	La instalación fue rápida y sencilla
+false	El instructivo no se entiende nada
+true	Muy buena experiencia de compra online
+false	Cobran de más y no devuelven el dinero
+true	Muy atentos en todo el proceso
+false	Me cancelaron la compra sin avisar
+true	Funciona de maravilla, lo uso todos los días
+false	Horrible calidad, se rompió en una semana
+true	El mejor servicio de entrega que he recibido
+false	Esperaba algo mejor por ese precio
+true	Perfecto para lo que necesitaba
+false	Mal empaquetado y atención nula
+true	Buena experiencia, repetiré pronto
+false	No lo volvería a comprar, mala inversión
+true	Me fascinó la rapidez del envío, superó mis expectativas
+true	El producto es justo lo que buscaba, la calidad es inmejorable
+false	El servicio de atención al cliente fue pésimo, no resolvieron nada
+false	La entrega fue un desastre, el paquete llegó abierto y dañado
+true	Completamente satisfecho con mi compra, todo funcionó a la perfección
+true	La experiencia de compra online fue fluida y sin complicaciones
+false	Este artículo no vale la pena, se ve de muy baja calidad
+false	Me siento estafado, el producto no cumple con lo prometido en la publicidad
+true	Increíble durabilidad, este producto superó todas mis expectativas
+true	La comunicación con el vendedor fue excelente, muy atento y resolutivo
+false	Demasiado caro para lo que ofrece, esperaba algo mucho mejor
+false	El repartidor nunca llegó a mi domicilio y tuve que recogerlo en la oficina
+true	Una joya, lo recomiendo al 100%, la inversión vale la pena
+true	El equipo de soporte técnico fue muy amable y me ayudó con mi problema
+false	Estoy muy decepcionado con el rendimiento, no es lo que esperaba
+false	La política de devoluciones es complicada y no me permitieron cambiarlo
+true	La interfaz de la página web es muy intuitiva, fácil de navegar
+true	El personal de la tienda fue extremadamente útil y bien informado
+false	Mi pedido se extravió y nadie pudo darme una solución
+false	Una total pérdida de dinero, arrepentido de esta compra
+false	El repartidor dejó el paquete en la puerta sin avisar, y se mojó
+true	La calidad del sonido es impresionante, muy satisfecho
+true	Resolvieron mi problema rápidamente, muy agradecido
+false	El diseño es horrible, no se parece en nada a las fotos
+false	La garantía es inútil, no cubre nada
+true	Gran adición a mi colección, el detalle es increíble
+true	El chat en línea fue de gran ayuda, respondieron todas mis dudas
+false	Demasiadas complicaciones para hacer una simple devolución
+false	El color del producto no era el que pedí
+true	Estoy muy contento con la funcionalidad de este dispositivo
+true	La mensajería fue muy eficiente y el paquete llegó en perfectas condiciones
+false	El producto no duró nada, se descompuso al poco tiempo
+false	El servicio de instalación fue desorganizado y poco profesional
+true	Me impresionó la durabilidad de este producto, es excelente
+true	La compra fue muy sencilla, sin problemas ni complicaciones
+false	La publicidad es engañosa, el producto no cumple lo que promete
+false	El producto es de mala calidad, no lo volvería a comprar
+true	Recomendado al 100%, superó mis expectativas en todos los sentidos
+true	El envío fue muy rápido y llegó en perfecto estado
+false	La atención al cliente fue inexistente, no hubo respuesta
+false	El paquete llegó dañado y el producto no funcionaba
+true	Estoy encantado con mi nueva adquisición, es justo lo que necesitaba
+true	El personal de la tienda fue muy amable y servicial
+false	No volvería a comprar aquí, la experiencia fue pésima
+false	El producto es defectuoso y no hay forma de reclamar
+true	Muy buena calidad y precio, una excelente inversión
+true	La entrega fue puntual y el repartidor muy amable

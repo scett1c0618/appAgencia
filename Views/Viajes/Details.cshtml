@@ -98,7 +98,27 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="fw-bold">@c.Nombre</span>
-                                            <span class="badge bg-info text-dark">@c.Etiqueta</span>
+                                            @if (!string.IsNullOrWhiteSpace(c.Etiqueta))
+                                            {
+                                                string color = c.Etiqueta switch
+                                                {
+                                                    "Positivo" => "success",
+                                                    "Negativo" => "danger",
+                                                    "Neutro" => "secondary",
+                                                    _ => "info"
+                                                };
+                                                var icono = c.Etiqueta switch
+                                                {
+                                                    "Positivo" => "<span style='font-size:1.2em;margin-left:4px;'>😊</span>",
+                                                    "Negativo" => "<span style='font-size:1.2em;margin-left:4px;'>😠</span>",
+                                                    _ => ""
+                                                };
+                                                <span class="badge bg-@color">@c.Etiqueta @Html.Raw(icono)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Sin clasificar</span>
+                                            }
                                         </div>
                                         <p class="mb-1">@c.Mensaje</p>
                                         <small class="text-muted">@c.FechaEnvio.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</small>

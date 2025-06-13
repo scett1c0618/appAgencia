@@ -1,31 +1,67 @@
-using Google.Cloud.Language.V1;
+using Microsoft.ML;
+using Microsoft.ML.Data;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace app1.Servicios
 {
     public class SentimentService
     {
-        public SentimentService() { }
+        private static PredictionEngine<SentimentData, SentimentPrediction>? _predEngine;
+        private static readonly object _lock = new();
+        private static bool _initialized = false;
 
-        public async Task<(string etiqueta, float puntuacion)> AnalizarSentimientoAsync(string texto)
+        public SentimentService()
         {
-            var client = await LanguageServiceClient.CreateAsync();
-            var document = new Document
+            if (!_initialized)
             {
-                Content = texto,
-                Type = Document.Types.Type.PlainText,
-                Language = "es"
-            };
-            var response = await client.AnalyzeSentimentAsync(document);
-            var score = response.DocumentSentiment.Score; // -1 (negativo) a 1 (positivo)
+                lock (_lock)
+                {
+                    if (!_initialized)
+                    {
+                        var dataPath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "sentiment-data.tsv");
+                        var mlContext = new MLContext();
+                        var data = mlContext.Data.LoadFromTextFile<SentimentData>(dataPath, hasHeader: true, separatorChar: '\t');
+                        var pipeline = mlContext.Transforms.Text.FeaturizeText("Features", nameof(SentimentData.Text))
+                            .Append(mlContext.BinaryClassification.Trainers.SdcaLogisticRegression());
+                        var model = pipeline.Fit(data);
+                        _predEngine = mlContext.Model.CreatePredictionEngine<SentimentData, SentimentPrediction>(model);
+                        _initialized = true;
+                    }
+                }
+            }
+        }
+
+        public Task<(string etiqueta, float puntuacion)> AnalizarSentimientoAsync(string texto)
+        {
+            if (_predEngine == null)
+                throw new InvalidOperationException("El modelo de sentimiento no está inicializado.");
+            var prediction = _predEngine.Predict(new SentimentData { Text = texto ?? string.Empty });
             string etiqueta;
-            if (score > 0.25)
+            if (prediction.Probability > 0.75)
                 etiqueta = "Positivo";
-            else if (score < -0.25)
+            else if (prediction.Probability < 0.25)
                 etiqueta = "Negativo";
             else
                 etiqueta = "Neutro";
-            return (etiqueta, score);
+            return Task.FromResult((etiqueta, prediction.Probability));
         }
+    }
+
+    public class SentimentData
+    {
+        [LoadColumn(0)]
+        public bool Label { get; set; }
+        [LoadColumn(1)]
+        public string Text { get; set; } = string.Empty;
+    }
+
+    public class SentimentPrediction
+    {
+        [ColumnName("PredictedLabel")]
+        public bool Prediction { get; set; }
+        public float Probability { get; set; }
+        public float Score { get; set; }
     }
 }
