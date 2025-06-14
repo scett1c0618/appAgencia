@@ -14,20 +14,22 @@ namespace app1.Servicios
             _httpClient = httpClient;
         }
 
-        public async Task<JsonDocument> ObtenerClimaAsync(string ciudad)
+        public async Task<JsonDocument?> ObtenerClimaAsync(string ciudad)
         {
             var url = $"https://api.openweathermap.org/data/2.5/weather?q={ciudad}&appid={_apiKey}&units=metric&lang=es";
             var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+                return null;
             var json = await response.Content.ReadAsStringAsync();
             return JsonDocument.Parse(json);
         }
 
-        public async Task<JsonDocument> ObtenerPronosticoAsync(string ciudad)
+        public async Task<JsonDocument?> ObtenerPronosticoAsync(string ciudad)
         {
             var url = $"https://api.openweathermap.org/data/2.5/forecast?q={ciudad}&appid={_apiKey}&units=metric&lang=es";
             var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+                return null;
             var json = await response.Content.ReadAsStringAsync();
             return JsonDocument.Parse(json);
         }

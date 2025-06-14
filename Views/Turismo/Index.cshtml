@@ -1,67 +1,138 @@
 @{
-    ViewData["Title"] = $"Información turística de {ViewBag.Ciudad}";
+    var nombreLugar = ViewBag.NombreLugar as string;
+    var titulo = !string.IsNullOrEmpty(nombreLugar) ? nombreLugar : (ViewBag.Ciudad as string);
     var ciudad = ViewBag.Ciudad as string;
     var resumen = ViewBag.Resumen as string;
     var imagen = ViewBag.Imagen as string;
-    var urlWiki = ViewBag.UrlWiki as string;
+    var urlInfo = ViewBag.UrlInfo as string;
     var sugerencias = ViewBag.Sugerencias as string[];
+    var sitioWeb = ViewBag.SitioWeb as string;
+    var tipoLugar = ViewBag.TipoLugar as string;
+    var rating = ViewBag.Rating as double?;
+    var telefono = ViewBag.Telefono as string;
+    var horario = ViewBag.Horario as string;
+    var reviews = ViewBag.Reviews as List<(string autor, string texto, int rating, string fecha)>;
+    var lugares = ViewBag.Lugares as List<(string placeId, string nombre, string direccion)>;
 }
-<h2 class="mb-4">Información turística y cultural de <span class="text-primary">@ciudad</span></h2>
-<form method="get" class="mb-4 row g-2">
-    <div class="col-md-6">
-        <input type="text" name="ciudad" class="form-control form-control-lg" value="@ciudad" placeholder="Ej: Cusco, Arequipa, Machu Picchu" />
-    </div>
-    <div class="col-md-2">
-        <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
-    </div>
-</form>
-@if (!string.IsNullOrEmpty(resumen))
-{
-    <div class="row mb-4">
-        <div class="col-md-5">
-            @if (!string.IsNullOrEmpty(imagen))
+<div class="container py-4">
+    <h2 class="mb-4 display-5 fw-bold text-center text-primary">Información turística de <span class="text-dark">@titulo</span></h2>
+    <form method="get" class="mb-5 row g-2 justify-content-center">
+        <div class="col-md-6">
+            <input type="text" name="ciudad" class="form-control form-control-lg shadow-sm" value="@ciudad" placeholder="Ej: Cusco, Arequipa, Machu Picchu" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary btn-lg w-100 shadow">Buscar</button>
+        </div>
+    </form>
+    @if (lugares != null && lugares.Count > 0)
+    {
+        <div class="alert alert-info shadow-sm">
+            <strong>Selecciona un lugar en <span class="text-primary">@ciudad</span> para ver información turística detallada:</strong>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+            @foreach (var l in lugares)
             {
-                <img src="@imagen" alt="@ciudad" class="img-fluid rounded shadow mb-3 w-100" style="max-height:350px;object-fit:cover;" />
+                <div class="col">
+                    <div class="card h-100 shadow border-0">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title mb-2 text-primary"><i class="bi bi-geo-alt-fill"></i> @l.nombre</h5>
+                                <p class="card-text text-muted mb-1"><i class="bi bi-geo"></i> @l.direccion</p>
+                            </div>
+                            <form method="get" class="mt-3">
+                                <input type="hidden" name="ciudad" value="@ciudad" />
+                                <input type="hidden" name="placeId" value="@l.placeId" />
+                                <button type="submit" class="btn btn-outline-primary w-100">Ver detalles</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             }
         </div>
-        <div class="col-md-7 d-flex flex-column justify-content-center">
-            <div class="bg-light p-3 rounded shadow-sm mb-2" style="font-size:1.15rem;">
-                @resumen
+    }
+    @if (!string.IsNullOrEmpty(resumen))
+    {
+        <div class="row mb-4">
+            <div class="col-md-5">
+                @if (!string.IsNullOrEmpty(imagen))
+                {
+                    <img src="@imagen" alt="@titulo" class="img-fluid rounded shadow mb-3 w-100" style="max-height:350px;object-fit:cover;" />
+                }
             </div>
-            @if (!string.IsNullOrEmpty(urlWiki))
-            {
-                <a href="@urlWiki" target="_blank" class="btn btn-outline-secondary mt-2">Ver más en Wikipedia</a>
-            }
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h4 class="mt-4">¿Sabías que...?</h4>
-            <div class="alert alert-info">
-                Esta información es obtenida en tiempo real desde Wikipedia. Puedes explorar más detalles, historia, cultura y atractivos turísticos en el enlace superior.
+            <div class="col-md-7 d-flex flex-column justify-content-center">
+                <div class="bg-white p-4 rounded shadow-sm mb-2 border border-2 border-primary-subtle" style="font-size:1.15rem;">
+                    @Html.Raw(resumen)
+                </div>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                    @if (!string.IsNullOrEmpty(urlInfo))
+                    {
+                        <a href="@urlInfo" target="_blank" class="btn btn-outline-secondary"><i class="bi bi-map"></i> Ver en Google Maps</a>
+                    }
+                    @if (!string.IsNullOrEmpty(sitioWeb))
+                    {
+                        <a href="@sitioWeb" target="_blank" class="btn btn-outline-info"><i class="bi bi-globe"></i> Sitio web</a>
+                    }
+                    @if (!string.IsNullOrEmpty(telefono))
+                    {
+                        <span class="badge bg-success fs-6"><i class="bi bi-telephone"></i> @telefono</span>
+                    }
+                    @if (rating != null)
+                    {
+                        <span class="badge bg-warning text-dark fs-6"><i class="bi bi-star-fill"></i> @rating/5</span>
+                    }
+                    @if (!string.IsNullOrEmpty(tipoLugar))
+                    {
+                        <span class="badge bg-info text-dark fs-6"><i class="bi bi-geo"></i> @tipoLugar</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(horario))
+                {
+                    <div class="mt-3">
+                        <strong><i class="bi bi-clock"></i> Horario:</strong><br />
+                        <span class="text-secondary">@Html.Raw(horario)</span>
+                    </div>
+                }
             </div>
         </div>
-    </div>
-}
-else if (sugerencias != null && sugerencias.Length > 0)
-{
-    <div class="alert alert-warning mt-4">
-        No se encontró información turística exacta para la ciudad o lugar seleccionado.<br />
-        <strong>¿Quizás quisiste buscar?</strong>
-        <ul class="mt-2">
-            @foreach (var sug in sugerencias)
-            {
-                <li>
-                    <form method="get" style="display:inline">
-                        <input type="hidden" name="ciudad" value="@sug" />
-                        <button type="submit" class="btn btn-link p-0 align-baseline">@sug</button>
-                    </form>
-                </li>
-            }
-        </ul>
-    </div>
-}
-else
-{
-    <div class="alert alert-warning mt-4">No se encontró información turística para la ciudad o lugar seleccionado.</div>
-}
+        @if (reviews != null && reviews.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="mt-4 mb-3 text-primary"><i class="bi bi-chat-left-text"></i> Opiniones de usuarios</h4>
+                    <div class="list-group mb-3 shadow-sm">
+                        @foreach (var r in reviews)
+                        {
+                            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1"><i class="bi bi-person-circle"></i> @r.autor</h6>
+                                    <small class="text-muted">@r.fecha</small>
+                                </div>
+                                <p class="mb-1">@r.texto</p>
+                                <small class="text-warning"><i class="bi bi-star-fill"></i> @r.rating</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else if (sugerencias != null && sugerencias.Length > 0)
+    {
+        <div class="alert alert-warning mt-4 shadow-sm">
+            No se encontró información turística exacta para la ciudad o lugar seleccionado.<br />
+            <strong>¿Quizás quisiste buscar?</strong>
+            <ul class="mt-2">
+                @foreach (var sug in sugerencias)
+                {
+                    <li>
+                        <form method="get" style="display:inline">
+                            <input type="hidden" name="ciudad" value="@sug" />
+                            <button type="submit" class="btn btn-link p-0 align-baseline">@sug</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+<!-- Requiere Bootstrap 5 y Bootstrap Icons para los iconos -->

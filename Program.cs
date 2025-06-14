@@ -22,19 +22,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services.AddHttpClient<app1.Servicios.ClimaService>();
-builder.Services.AddHttpClient<app1.Servicios.HotelService>();
-builder.Services.AddHttpClient<AmadeusHotelService>(client =>
-{
-    client.Timeout = TimeSpan.FromSeconds(30);
-});
-builder.Services.AddSingleton(sp =>
-    new AmadeusHotelService(
-        sp.GetRequiredService<HttpClient>(),
-        "z6eKUqkG90QUuhGvNLf54mycASX5Pj6S", // <-- Reemplaza aquí
-        "QAiAciYoFMNnu02Y" // <-- Reemplaza aquí
-    )
-);
-builder.Services.AddHttpClient<app1.Servicios.WikipediaService>();
+builder.Services.AddHttpClient<app1.Servicios.GooglePlacesService>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(2);

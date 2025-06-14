@@ -89,7 +89,20 @@
                     <hr />
                     <!-- Sección de comentarios -->
                     <div class="mt-4">
-                        <h4>Comentarios de viajeros (@(ViewBag.TotalComentarios ?? 0))</h4>
+                        <h4>Comentarios de viajeros (@(ViewBag.TotalComentarios ?? 0))
+                            @if ((ViewBag.ComentariosPositivos ?? 0) > 0)
+                            {
+                                <span class="badge bg-success ms-2">+@ViewBag.ComentariosPositivos</span>
+                            }
+                            @if ((ViewBag.ComentariosNegativos ?? 0) > 0)
+                            {
+                                <span class="badge bg-danger ms-1">-@ViewBag.ComentariosNegativos</span>
+                            }
+                            @if ((ViewBag.ComentariosNeutros ?? 0) > 0)
+                            {
+                                <span class="badge bg-secondary ms-1">@ViewBag.ComentariosNeutros</span>
+                            }
+                        </h4>
                         @if (ViewBag.Comentarios != null && ((List<app1.Models.Contacto>)ViewBag.Comentarios).Any())
                         {
                             foreach (var c in (List<app1.Models.Contacto>)ViewBag.Comentarios)
@@ -133,7 +146,7 @@
                         <div class="mt-3">
                             @if ((User?.Identity?.IsAuthenticated) == true)
                             {
-                                <a asp-controller="Contacto" asp-action="Comentario" class="btn btn-outline-primary">Dejar un comentario</a>
+                                <a asp-controller="Contacto" asp-action="Comentario" asp-route-viajeId="@Model.Id" class="btn btn-outline-primary">Dejar un comentario</a>
                             }
                             else
                             {

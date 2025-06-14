@@ -47,16 +47,19 @@
                                 </a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Clima" asp-action="Index">
-                                <i class="bi bi-cloud-sun-fill me-1 text-acento"></i> Clima
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Turismo" asp-action="Index">
-                                <i class="bi bi-map-fill me-1 text-acento"></i> Turismo
-                            </a>
-                        </li>
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Clima" asp-action="Index">
+                                    <i class="bi bi-cloud-sun-fill me-1 text-acento"></i> Clima
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Turismo" asp-action="Index">
+                                    <i class="bi bi-map-fill me-1 text-acento"></i> Turismo
+                                </a>
+                            </li>
+                        }
                         @if (!User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -72,13 +75,18 @@
                                     <i class="bi bi-shield-lock-fill me-1 text-acento"></i> Admin
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Panel Admin</a></li>
+                                    <!-- <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Panel Admin</a></li> -->
                                     <li><a class="dropdown-item" asp-controller="Admin" asp-action="Compras">Compras</a></li>
                                     <li><a class="dropdown-item" asp-controller="Contacto" asp-action="AdminMensajes">Mensajes</a></li>
                                     <li><a class="dropdown-item" asp-controller="Contacto" asp-action="AdminComentarios">Comentarios</a></li>
                                 </ul>
                             </li>
                         }
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold px-3 rounded-pill" style="color:var(--color-primario);" asp-controller="Home" asp-action="Nosotros">
+                                <i class="bi bi-people-fill me-1 text-acento"></i> Nosotros
+                            </a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -92,11 +100,7 @@
         @await Html.PartialAsync("_Footer")
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - app1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>

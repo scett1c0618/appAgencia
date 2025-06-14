@@ -78,6 +78,9 @@ namespace app1.Controllers
                 .ToListAsync();
             ViewBag.Comentarios = comentarios;
             ViewBag.TotalComentarios = comentarios.Count;
+            ViewBag.ComentariosPositivos = comentarios.Count(c => c.Etiqueta == "Positivo");
+            ViewBag.ComentariosNegativos = comentarios.Count(c => c.Etiqueta == "Negativo");
+            ViewBag.ComentariosNeutros = comentarios.Count(c => c.Etiqueta == "Neutro");
             // Pasar info de modificación a la vista
             ViewBag.Modificar = modificar ?? false;
             ViewBag.Cantidad = cantidad;

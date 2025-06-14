@@ -1,8 +1,32 @@
 @model IEnumerable<app1.Models.Contacto>
 @{
     ViewData["Title"] = "Comentarios de Viajes";
+    var viajes = ViewBag.Viajes as List<app1.Models.Viaje>;
+    int? viajeIdSeleccionado = ViewBag.ViajeIdSeleccionado as int?;
 }
 <h2 class="mb-4">Comentarios de Viajes</h2>
+<form method="get" asp-action="AdminComentarios" class="mb-3">
+    <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <label for="viajeId" class="col-form-label fw-semibold">Filtrar por viaje:</label>
+        </div>
+        <div class="col-auto">
+            <select id="viajeId" name="viajeId" class="form-select">
+                <option value="0" selected="@(viajeIdSeleccionado == null || viajeIdSeleccionado == 0 ? "selected" : null)">Todos</option>
+                @if (viajes != null)
+                {
+                    foreach (var v in viajes)
+                    {
+                        <option value="@v.Id" selected="@(viajeIdSeleccionado == v.Id ? "selected" : null)">@v.Titulo</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </div>
+    </div>
+</form>
 <table class="table table-striped table-bordered">
     <thead class="table-dark">
         <tr>

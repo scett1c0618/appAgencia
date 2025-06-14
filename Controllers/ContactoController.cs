@@ -87,19 +87,28 @@ namespace app1.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult AdminComentarios()
+        public IActionResult AdminComentarios(int? viajeId = null)
         {
+            // Obtener todos los viajes para el filtro
+            var viajes = _context.Viajes.OrderBy(v => v.Titulo).ToList();
+            ViewBag.Viajes = viajes;
+            ViewBag.ViajeIdSeleccionado = viajeId;
             // Solo comentarios (con ViajeId asociado), incluir datos del viaje
-            var comentarios = _context.Contacto
+            var comentariosQuery = _context.Contacto
                 .Include(c => c.Viaje)
-                .Where(c => c.ViajeId != null)
+                .Where(c => c.ViajeId != null);
+            if (viajeId.HasValue && viajeId.Value != 0)
+            {
+                comentariosQuery = comentariosQuery.Where(c => c.ViajeId == viajeId.Value);
+            }
+            var comentarios = comentariosQuery
                 .OrderByDescending(c => c.FechaEnvio)
                 .ToList();
             return View("AdminComentarios", comentarios);
         }
 
         [Authorize]
-        public async Task<IActionResult> Comentario()
+        public async Task<IActionResult> Comentario(int? viajeId = null)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -116,6 +125,8 @@ namespace app1.Controllers
                                    .ToList();
             ViewBag.ViajesComprados = viajesComprados;
             var contacto = new Contacto { Nombre = user.UserName, Correo = user.Email, Telefono = user.PhoneNumber ?? string.Empty };
+            if (viajeId != null)
+                contacto.ViajeId = viajeId.Value;
             return View("Comentario", contacto);
         }
 
@@ -150,6 +161,8 @@ namespace app1.Controllers
                 _context.Contacto.Add(contacto);
                 await _context.SaveChangesAsync();
                 TempData["Resultado"] = "Comentario enviado correctamente." + (contacto.Etiqueta != null ? $" El comentario es {contacto.Etiqueta} ({contacto.Puntuacion:N2})" : "");
+                if (contacto.ViajeId != 0)
+                    return RedirectToAction("Details", "Viajes", new { id = contacto.ViajeId });
                 return RedirectToAction("Comentario");
             }
             // Recargar viajes comprados si hay error

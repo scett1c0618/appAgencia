@@ -47,6 +47,10 @@
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm w-100" id="btnEnviar" disabled>Enviar comentario</button>
                         </div>
+                        @if (Model.ViajeId != 0)
+                        {
+                            <input type="hidden" asp-for="ViajeId" />
+                        }
                     </form>
                 </div>
             </div>

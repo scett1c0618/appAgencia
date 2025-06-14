@@ -22,9 +22,19 @@ namespace app1.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Compras()
+        public async Task<IActionResult> Compras(int? viajeId = null)
         {
-            var compras = await _context.Compras.Include(c => c.Detalles).ToListAsync();
+            // Obtener todos los viajes para el filtro
+            var viajes = await _context.Viajes.OrderBy(v => v.Titulo).ToListAsync();
+            ViewBag.Viajes = viajes;
+            ViewBag.ViajeIdSeleccionado = viajeId;
+            // Obtener compras, filtrando por viaje si corresponde
+            var comprasQuery = _context.Compras.AsQueryable();
+            if (viajeId.HasValue && viajeId.Value != 0)
+            {
+                comprasQuery = comprasQuery.Where(c => c.Detalles.Any(d => d.ViajeId == viajeId.Value));
+            }
+            var compras = await comprasQuery.Include(c => c.Detalles).ToListAsync();
             return View(compras);
         }
     }
