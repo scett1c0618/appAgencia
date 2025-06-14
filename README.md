@@ -8,8 +8,6 @@ Esta aplicación es una agencia de viajes peruana desarrollada en ASP.NET MVC co
 - Reservas y gestión de carrito
 - Autenticación y roles (Cliente/Admin)
 - CRUD de viajes y departamentos (Admin)
-- Publicaciones automáticas en Facebook/Instagram (Admin)
-- Integración con MercadoPago y mapas
 
 ## Estructura recomendada
 
@@ -28,6 +26,3 @@ Esta aplicación es una agencia de viajes peruana desarrollada en ASP.NET MVC co
 - Repositorio: https://github.com/scett1c0618/app1
 - Despliegue recomendado: Render.com
 
----
-
-Este README se actualizará conforme avance el desarrollo.
